@@ -165,6 +165,45 @@ an `mpiexec` of another MPI installation. To run on several nodes, use the launc
 your cluster together with a SeisSol that is built for that machine (this generic build is not
 meant for HPC systems).
 
+### Which MPI is used, and how to change it
+
+The solver is linked against **MPICH** (currently 5.0.2, the `MPICH_jll` package). The
+exported folder contains this MPICH: the launcher `bin/mpiexec` and the library `lib/libmpi.so.12`
+(`libmpi.12.dylib` on macOS). Your system's MPI (OpenMPI, Intel MPI, a cluster MPI, ...) is **not**
+used unless you ask for it. You can see what is used with:
+
+```sh
+~/seissol/bin/mpiexec --version                  # launcher
+ldd ~/seissol/bin/seissol | grep mpi             # library (macOS: otool -L)
+```
+
+Always start the solver with the `mpiexec` of the *same* MPI it loads at run time; an `mpiexec`
+of another MPI family (e.g. OpenMPI's, which also uses a different library `libmpi.so.40`)
+cannot start it.
+
+**Using another MPI.** MPICH has a stable binary interface (ABI), so the solver also runs on top
+of any other MPI that implements the *MPICH ABI* and provides `libmpi.so.12`: a system MPICH,
+MVAPICH, Intel MPI, Cray MPICH, ... Point the dynamic loader to its library directory and use its launcher:
+
+```sh
+export MPI=/opt/mpich                             # the other MPI installation
+export LD_LIBRARY_PATH=$MPI/lib:$LD_LIBRARY_PATH  # picked up before the libraries of ~/seissol/lib
+$MPI/bin/mpiexec -n 4 ~/seissol/bin/seissol parameters.par
+ldd ~/seissol/bin/seissol | grep libmpi           # check: should now point into $MPI/lib
+```
+
+(On macOS use `DYLD_LIBRARY_PATH`, or delete `lib/libmpi*.dylib` from the folder.) This was
+tested on Linux with the shipped MPICH 5.0.2 against a system MPICH 4.3.0: same results. It was
+not tested with Intel MPI, MVAPICH, Cray MPICH or on macOS. MPI libraries with another ABI
+(OpenMPI) cannot be used this way; for those, or when you want full speed on a cluster
+(network-specific MPI, tuned kernels), build SeisSol from source against that MPI as described in
+the [SeisSol documentation](https://seissol.readthedocs.io).
+
+Inside Julia, `run_seissol` uses the MPI that [MPI.jl](https://github.com/JuliaParallel/MPI.jl)
+is configured for (MPICH by default). `SeisSol_jll` only exists for MPICH, so switching MPI.jl to
+another MPI with `MPIPreferences` makes `SeisSol_jll` unavailable; use the terminal procedure
+above for other MPIs.
+
 Once `SeisSol_jll` is registered in the General registry, [JLLPrefixes.jl](https://github.com/JuliaPackaging/JLLPrefixes.jl)
 creates such a folder for any JLL (`collect_artifact_paths(["SeisSol_jll"])` followed by
 `deploy_artifact_paths("~/seissol", paths)`).
