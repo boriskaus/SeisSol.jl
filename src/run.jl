@@ -1,7 +1,7 @@
 function check_available()
     if !SeisSol_jll.is_available()
         error("""SeisSol_jll is not available for this platform/MPI combination.
-              The binary is built for MPICH (Linux, macOS) and Microsoft MPI (Windows).
+              The binary is built for Linux and macOS with MPICH (there is no Windows version).
               If you changed the MPI implementation in MPIPreferences, switch back with
                   using MPIPreferences; MPIPreferences.use_jll_binary("MPICH_jll")
               and restart Julia.""")
@@ -62,8 +62,8 @@ function run_seissol(parfile::AbstractString; nprocs::Integer = 1,
                      nthreads::Integer = default_nthreads(nprocs),
                      dir::AbstractString = dirname(abspath(parfile)),
                      commthread::Bool = false, pin::Bool = false, logfile = nothing)
-    check_available()
     isfile(parfile) || throw(ArgumentError("parameter file not found: $parfile"))
+    check_available()
     par = relpath(abspath(parfile), abspath(dir))
     return SeisSol_jll.seissol() do exe
         launch(exe, par; nprocs, nthreads, commthread, pin, dir = abspath(dir), logfile)

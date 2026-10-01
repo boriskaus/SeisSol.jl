@@ -10,7 +10,7 @@ function seissol_executable()
 end
 
 # Executables that are copied into an exported prefix: SeisSol itself and the MPI launcher.
-const EXPORTED_BINARIES = r"^(seissol|seissol_proxy|mpiexec.*|mpirun|hydra_.*|smpd.*|msmpi.*)(\.exe)?$"
+const EXPORTED_BINARIES = r"^(seissol|seissol_proxy|mpiexec.*|mpirun|hydra_.*)$"
 
 function link_or_copy(src, dst; link::Bool)
     ispath(dst) && return
@@ -47,17 +47,13 @@ cd tpv13; /opt/seissol/bin/mpiexec -n 4 /opt/seissol/bin/seissol parameters.par
 """
 function export_prefix(dir::AbstractString; link::Bool = true)
     check_available()
-    sys = Sys.iswindows()
     bin = mkpath(joinpath(dir, "bin"))
-    lib = mkpath(joinpath(dir, sys ? "bin" : "lib"))
+    lib = mkpath(joinpath(dir, "lib"))
     for d in SeisSol_jll.PATH_list
         isdir(d) || continue
         for f in readdir(d)
             p = joinpath(d, f)
             isfile(p) && occursin(EXPORTED_BINARIES, f) && link_or_copy(p, joinpath(bin, f); link)
-        end
-        sys && for f in readdir(d)   # on Windows the DLLs live in bin
-            isfile(joinpath(d, f)) && endswith(f, ".dll") && link_or_copy(joinpath(d, f), joinpath(bin, f); link)
         end
     end
     for d in SeisSol_jll.LIBPATH_list
@@ -65,7 +61,7 @@ function export_prefix(dir::AbstractString; link::Bool = true)
         for f in readdir(d)
             p = joinpath(d, f)
             if isfile(p) || islink(p)
-                occursin(r"\.(so|dylib|dll)", f) && link_or_copy(p, joinpath(lib, f); link)
+                occursin(r"\.(so|dylib)", f) && link_or_copy(p, joinpath(lib, f); link)
             end
         end
     end
