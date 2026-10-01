@@ -3,7 +3,7 @@
 [![CI](https://github.com/boriskaus/SeisSol.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/boriskaus/SeisSol.jl/actions/workflows/CI.yml)
 
 A small Julia wrapper that makes it easy to run [**SeisSol**](https://seissol.org) examples on
-**Linux, macOS and Windows**, without compiling anything and without Docker or a cluster.
+**Linux and macOS** (Windows: see the limitations), without compiling anything and without Docker or a cluster.
 It downloads a precompiled SeisSol binary ([`SeisSol_jll`](https://github.com/boriskaus/SeisSol_jll.jl)),
 starts it with MPI + OpenMP, and offers a few helpers to edit parameter files and read the output.
 
@@ -23,12 +23,16 @@ large supercomputers (MPI + OpenMP, GPUs).
 
 ## Limitations — please read
 
+- **Windows:** there is currently no SeisSol binary for Windows (the build crashes at runtime). The wrapper itself (parameter files, example download, output reading) works, but the solver tests are skipped; please use WSL2 (Linux).
+
 The binary behind this package is a **generic, portable build**, chosen so that it runs everywhere:
 
-- no CPU-specific optimisation (SeisSol's `noarch` target) and no libxsmm/PSpaMM kernels, so it
-  is considerably **slower than an optimised SeisSol** on HPC systems;
-- fixed configuration: convergence order 4, elastic equations, double precision;
-- no NetCDF, ASAGI or GPU support.
+- the same settings as the SeisSol team's Docker image: AVX2/FMA kernels (`hsw`) generated with
+  libxsmm and PSpaMM on x86_64, NEON kernels on aarch64 (PSpaMM on Linux, generic kernels on macOS),
+  so that it runs on any CPU of the last decade but is **not tuned to your CPU like a build on an HPC system**;
+- fixed configuration: convergence order 4, elastic equations, double precision (no viscoelastic,
+  poroelastic or anisotropic variants), 32-bit METIS indices, no GPU support;
+- ASAGI and NetCDF are enabled (e.g. Kaikoura, Sulawesi).
 
 It is meant for learning, teaching, testing setups and small/medium problems on a laptop or
 workstation. For production runs, build SeisSol from source on your cluster as described in the
@@ -48,8 +52,7 @@ Pkg.add(url="https://github.com/boriskaus/SeisSol_jll.jl")
 Pkg.add(url="https://github.com/boriskaus/SeisSol.jl")
 ```
 
-The binary is built for MPICH (Linux, macOS) and Microsoft MPI (Windows), which are the
-defaults of MPI.jl. If you changed `MPIPreferences` to another MPI, switch back with
+The binary is built for MPICH (Linux, macOS), which is the default of MPI.jl. If you changed `MPIPreferences` to another MPI, switch back with
 `using MPIPreferences; MPIPreferences.use_jll_binary("MPICH_jll")` and restart Julia.
 
 ## Usage
@@ -75,21 +78,103 @@ Main functions (see their docstrings):
 |---|---|
 | `run_seissol(parfile; nprocs, nthreads, ...)` | run SeisSol with MPI (+ OpenMP; 1 thread per rank by default when `nprocs > 1`) |
 | `run_proxy(; kernel, cells, timesteps)` | SeisSol's kernel benchmark (needs no input) |
+| `seissol_executable()`, `export_prefix(dir)` | path of the executable; standalone installation for use without Julia |
 | `examples()`, `example_info(name)`, `download_example(name)` | list, describe and download the example setups of the SeisSol training material and examples repository (checksum-verified) |
 | `get_parameter`, `set_parameters!`, `delete_parameter!` | edit SeisSol parameter files |
 | `read_energy`, `moment_magnitude` | read `*-energy.csv`, compute Mw |
 | `citation()` | print the references to cite |
 
-`examples()` lists 24 setups: `"tpv13"` and `"earthquake-tsunami"` are known to run with the bundled binary; `"kaikoura"`, `"sulawesi"` need a binary with ASAGI; the `"examples/..."` entries (SCEC benchmarks) only contain the setup files, their meshes must be generated with gmsh and PUMGen. `example_info(name)` shows the status.
+`examples()` lists 24 setups: `"tpv13"`, `"earthquake-tsunami"`, `"kaikoura"` and `"sulawesi"` are known to run with the bundled binary; the `"examples/..."` entries (SCEC benchmarks) only contain the setup files, their meshes must be generated with gmsh and PUMGen. `example_info(name)` shows the status.
 
 Visualise the XDMF/HDF5 output (fault and free-surface fields) with [ParaView](https://www.paraview.org).
+
+## Running SeisSol directly from the terminal (without Julia)
+
+Julia is only needed once, to download SeisSol. After that the solver is an ordinary
+executable that you can use from a shell, a script or a job system.
+
+**1. Install SeisSol into a folder** (one time, from Julia or directly from the shell):
+
+```sh
+julia -e 'using SeisSol; export_prefix(expanduser("~/seissol"))'
+```
+
+This creates a self-contained folder (the files are hard links into the Julia artifact
+folder where possible, so it takes little extra disk space):
+
+```
+~/seissol/bin/seissol          the solver
+~/seissol/bin/seissol_proxy    kernel benchmark that needs no input files
+~/seissol/bin/mpiexec          the MPI launcher that matches the solver (MPICH)
+~/seissol/lib/                 all shared libraries; the executables find them by themselves,
+                               no LD_LIBRARY_PATH / DYLD_LIBRARY_PATH is needed
+```
+
+(`julia -e 'using SeisSol; println(seissol_executable())'` prints the path of the executable
+inside the Julia artifact, but that one needs the libraries of its dependencies and is therefore
+best used through `export_prefix`.) Optionally add the folder to your path:
+`export PATH=$HOME/seissol/bin:$PATH`.
+
+**2. Check the installation** with the built-in benchmark:
+
+```sh
+~/seissol/bin/seissol_proxy 10000 10 all     # <cells> <time steps> <kernel>
+```
+
+**3. Get an example** (a mesh `*.puml.h5`, material/fault `*.yaml` files and a parameter file
+`*.par`). Either from Julia, `julia -e 'using SeisSol; println(download_example("tpv13"; dir="tpv13"))'`,
+or with git and no Julia at all (all examples of the SeisSol training material):
+
+```sh
+git clone --depth 1 https://github.com/SeisSol/Training.git
+cd Training/tpv13
+mkdir -p outputs                              # the parameter file writes its output here
+```
+
+**4. Run it.** SeisSol reads the parameter file given as its only argument; relative file names
+inside it are relative to the *current directory*, so start it from the example folder:
+
+```sh
+cd Training/tpv13
+export SEISSOL_COMMTHREAD=0      # no dedicated MPI thread (see below)
+export OMP_NUM_THREADS=1         # OpenMP threads per MPI rank
+~/seissol/bin/mpiexec -n 4 ~/seissol/bin/seissol parameters.par      # 4 MPI ranks
+```
+
+Edit `EndTime` (and, if you like, `OutputFile`, `EnergyOutputInterval`, ...) in the parameter
+file first if you only want a short test run. A single rank also works without `mpiexec`:
+`~/seissol/bin/seissol parameters.par`. Results appear where `OutputFile` points to
+(`outputs/tpv13-*`): XDMF/HDF5 files for [ParaView](https://www.paraview.org) and the
+`*-energy.csv` file with the energy and seismic moment.
+
+**Settings that matter**
+
+| setting | meaning |
+|---|---|
+| `mpiexec -n N` | number of MPI ranks (processes). Use about one per physical core. |
+| `OMP_NUM_THREADS` | OpenMP threads per rank. With several ranks use `1`; with a single rank you can use all cores. Total cores used = ranks × threads. |
+| `SEISSOL_COMMTHREAD=0` | SeisSol normally reserves one core per rank for MPI communication and stops with *"There are no free CPUs left"* if you use all cores. `0` switches this off (polling instead); the right choice on laptops and workstations. |
+| `OMP_PLACES=cores`, `OMP_PROC_BIND=close` | optional: pin the threads to cores (Linux). |
+| `ulimit -s unlimited` | optional: SeisSol warns when the stack size limit is small; larger problems may need it. |
+
+On macOS, if the system refuses to start a downloaded executable, remove the quarantine
+attribute: `xattr -r -d com.apple.quarantine ~/seissol`.
+
+The MPI that is shipped is MPICH, so use the `mpiexec` from the same folder; do not mix it with
+an `mpiexec` of another MPI installation. To run on several nodes, use the launcher options of
+your cluster together with a SeisSol that is built for that machine (this generic build is not
+meant for HPC systems).
+
+Once `SeisSol_jll` is registered in the General registry, [JLLPrefixes.jl](https://github.com/JuliaPackaging/JLLPrefixes.jl)
+creates such a folder for any JLL (`collect_artifact_paths(["SeisSol_jll"])` followed by
+`deploy_artifact_paths("~/seissol", paths)`).
 
 ## Tests and CI
 
 The test suite mirrors the checks of SeisSol's own CI (the solver must refuse to run without
 input, every kernel of the proxy mini-app must run) and adds parameter-file and output tests
 and a real dynamic-rupture run (TPV13, 1 and 2 MPI ranks, compared with a reference moment).
-GitHub Actions runs it on Linux, Intel and Apple-silicon macOS and Windows.
+GitHub Actions runs it on Linux, Intel and Apple-silicon macOS and Windows (where the solver tests are skipped).
 Locally: `julia --project=. test/runtests.jl` (`Pkg.test()` works once the JLLs are registered).
 
 ## Credits and how to cite

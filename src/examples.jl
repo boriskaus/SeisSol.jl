@@ -10,7 +10,6 @@ const EXAMPLES = Dict{String,Dict{String,Any}}(e["name"] => e for e in TOML.pars
 const STATUS = Dict(
     "runs" => "works with the bundled SeisSol binary",
     "unverified" => "not verified to work with the bundled binary",
-    "needs-asagi" => "needs a SeisSol binary with ASAGI (3D structure read from NetCDF files)",
     "needs-mesh" => "mesh is not included: generate it with gmsh and PUMGen",
 )
 
@@ -27,8 +26,8 @@ is_doc(path) = occursin(r"(^|/)figures/|\.(png|ipynb|pdf)$"i, path)
 
 Names of the examples that can be fetched with [`download_example`](@ref). Examples of the
 SeisSol training material are called `"tpv13"`, `"kaikoura"`, ...; the setups in the SeisSol
-examples repository are called `"examples/tpv5"`, ... With `status` (`"runs"`, `"unverified"`,
-`"needs-asagi"` or `"needs-mesh"`) only the examples with that status are returned.
+examples repository are called `"examples/tpv5"`, ... With `status` (`"runs"`, `"unverified"`
+or `"needs-mesh"`) only the examples with that status are returned.
 """
 function examples(; status = nothing)
     names = sort!(collect(keys(EXAMPLES)))

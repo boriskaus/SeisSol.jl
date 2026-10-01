@@ -7,7 +7,7 @@ using TOML
 training, examples = ARGS
 
 # name => (repo, folder, parfile, status, description)
-# status: "runs" (checked with the bundled binary), "needs-asagi", "needs-mesh", "unverified"
+# status: "runs" (checked with the bundled binary), "needs-mesh", "unverified"
 const META = [
     ("tpv13", "Training", "tpv13", "parameters.par", "runs",
      "SCEC TPV13: spontaneous rupture on a normal fault with off-fault plasticity (coarse mesh, 37k tetrahedra)"),
@@ -15,9 +15,9 @@ const META = [
      "Dynamic rupture of a subduction-type fault with the free-surface response (two meshes: 105k and 225k tetrahedra)"),
     ("cdb_tpv23", "Training", "cdb_tpv23", "parameters_qwx.par", "unverified",
      "SCEC TPV23 style rupture with a fault-zone (damage) material; a quick test with the bundled binary produced NaNs"),
-    ("kaikoura", "Training", "kaikoura", "parametersLSW.par", "needs-asagi",
+    ("kaikoura", "Training", "kaikoura", "parametersLSW.par", "runs",
      "2016 Kaikoura earthquake (New Zealand), linear slip weakening (parametersLSW.par) and rate-and-state (parametersRS.par); 3D structure read with ASAGI"),
-    ("sulawesi", "Training", "sulawesi", "parametersLSW.par", "needs-asagi",
+    ("sulawesi", "Training", "sulawesi", "parametersLSW.par", "runs",
      "2018 Palu (Sulawesi) earthquake with 3D velocity model read with ASAGI"),
     ("northridge", "Training", "northridge", "parameters.par", "needs-mesh",
      "1994 Northridge earthquake with a kinematic source (gmsh mesh must be converted with PUMGen, SRF source needs the NRF converter)"),

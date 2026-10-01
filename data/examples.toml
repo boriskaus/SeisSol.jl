@@ -3,7 +3,7 @@ parfile = "parameters.par"
 name = "tpv13"
 repo = "SeisSol/Training"
 folder = "tpv13"
-commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
+commit = "efff472478f5e12477ed8eb7c846f6af6384d55b"
 status = "runs"
 description = "SCEC TPV13: spontaneous rupture on a normal fault with off-fault plasticity (coarse mesh, 37k tetrahedra)"
 
@@ -32,12 +32,12 @@ description = "SCEC TPV13: spontaneous rupture on a normal fault with off-fault 
     sha1 = "bf375b2494550ce1d5d1651c49562c5275d812fd"
     path = "tpv13/tpv12_13_material.yaml"
     [[example.files]]
-    size = 20236
-    sha1 = "b636a730ad0c682b03e625ed6fc1fa8fa96344e6"
+    size = 20216
+    sha1 = "c31de0a6183aa93be076198a8709c3a3ab5453d8"
     path = "tpv13/tpv13.ipynb"
     [[example.files]]
-    size = 249416
-    sha1 = "4d112c5a44943f9d1d3cd15b0b03142f673d17fc"
+    size = 249417
+    sha1 = "f611a914b7a5f868c3d13d4e5e64c3a55a479ad1"
     path = "tpv13/tpv13_qwx.ipynb"
     [[example.files]]
     size = 2688
@@ -52,7 +52,7 @@ parfile = "parameters_qwx.par"
 name = "earthquake-tsunami"
 repo = "SeisSol/Training"
 folder = "earthquake-tsunami"
-commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
+commit = "efff472478f5e12477ed8eb7c846f6af6384d55b"
 status = "runs"
 description = "Dynamic rupture of a subduction-type fault with the free-surface response (two meshes: 105k and 225k tetrahedra)"
 
@@ -97,7 +97,7 @@ parfile = "parameters_qwx.par"
 name = "cdb_tpv23"
 repo = "SeisSol/Training"
 folder = "cdb_tpv23"
-commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
+commit = "efff472478f5e12477ed8eb7c846f6af6384d55b"
 status = "unverified"
 description = "SCEC TPV23 style rupture with a fault-zone (damage) material; a quick test with the bundled binary produced NaNs"
 
@@ -142,13 +142,13 @@ parfile = "parametersLSW.par"
 name = "kaikoura"
 repo = "SeisSol/Training"
 folder = "kaikoura"
-commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
-status = "needs-asagi"
+commit = "efff472478f5e12477ed8eb7c846f6af6384d55b"
+status = "runs"
 description = "2016 Kaikoura earthquake (New Zealand), linear slip weakening (parametersLSW.par) and rate-and-state (parametersRS.par); 3D structure read with ASAGI"
 
     [[example.files]]
-    size = 13203
-    sha1 = "58de22f2a5e28501c54b7cb127f604a432d6d1bc"
+    size = 13195
+    sha1 = "6293ec5960e7ef4d8fdbe86cc1d1b6256514369c"
     path = "kaikoura/Kaikoura.ipynb"
     [[example.files]]
     size = 8304013
@@ -227,8 +227,8 @@ description = "2016 Kaikoura earthquake (New Zealand), linear slip weakening (pa
     sha1 = "e2f279bf3fbb408c9eead89934e4890c4d9a4d04"
     path = "kaikoura/parametersLSW.par"
     [[example.files]]
-    size = 3922
-    sha1 = "9dd594ecec14baed4fc3f8cc87b4a26c3675aa51"
+    size = 3923
+    sha1 = "9fbc6234e461dc6f09ef5adc9699e58655cf9969"
     path = "kaikoura/parametersRS.par"
     [[example.files]]
     size = 434
@@ -239,8 +239,8 @@ parfile = "parametersLSW.par"
 name = "sulawesi"
 repo = "SeisSol/Training"
 folder = "sulawesi"
-commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
-status = "needs-asagi"
+commit = "efff472478f5e12477ed8eb7c846f6af6384d55b"
+status = "runs"
 description = "2018 Palu (Sulawesi) earthquake with 3D velocity model read with ASAGI"
 
     [[example.files]]
@@ -252,8 +252,8 @@ description = "2018 Palu (Sulawesi) earthquake with 3D velocity model read with 
     sha1 = "02243a86e1d15e4bcf3e196d0104dc7dae132554"
     path = "sulawesi/3dvel_Sulawesi_BMKG.nc"
     [[example.files]]
-    size = 1698
-    sha1 = "6a52b8565dae14b819897098da7b8ef14f4df4d8"
+    size = 1201
+    sha1 = "a2c76747ac256c6e120db73c43f90b46e592fa01"
     path = "sulawesi/GPSfiltered_proj_200m_8e6.dat"
     [[example.files]]
     size = 9737880
@@ -300,27 +300,27 @@ description = "2018 Palu (Sulawesi) earthquake with 3D velocity model read with 
     sha1 = "99182bcf2ee6c00540f0b1a132b563b29069267a"
     path = "sulawesi/Ulrich19_Fig3.png"
     [[example.files]]
-    size = 41
-    sha1 = "f3c4c9585c3c84802fbbab66039176ec3011ac30"
+    size = 34
+    sha1 = "577189745560e8635875c89f6ef582ce34681b56"
     path = "sulawesi/faultreceiver_hypocenter.dat"
     [[example.files]]
-    size = 3519
-    sha1 = "f2a529212b701fe4184e64f10a569115c4efc3c6"
+    size = 3527
+    sha1 = "3f9ee2e6d1845e0ffcd5e1ef99eb88f9bf9238e3"
     path = "sulawesi/parametersLSW.par"
     [[example.files]]
-    size = 3510
-    sha1 = "753e173bc2dd2e53598f9032ce58fede68e09154"
+    size = 3533
+    sha1 = "8b4f01baf53c2e5c6cb1e205f55084c0ee6485d9"
     path = "sulawesi/parametersRS.par"
     [[example.files]]
-    size = 12894
-    sha1 = "226790d28a091b2310ee21600531c5ef91c77fda"
+    size = 12888
+    sha1 = "0407e5be1ae849cc67f2ac1a6328af18b19fe096"
     path = "sulawesi/sulawesi.ipynb"
 [[example]]
 parfile = "parameters.par"
 name = "northridge"
 repo = "SeisSol/Training"
 folder = "northridge"
-commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
+commit = "efff472478f5e12477ed8eb7c846f6af6384d55b"
 status = "needs-mesh"
 description = "1994 Northridge earthquake with a kinematic source (gmsh mesh must be converted with PUMGen, SRF source needs the NRF converter)"
 
@@ -329,8 +329,8 @@ description = "1994 Northridge earthquake with a kinematic source (gmsh mesh mus
     sha1 = "18f6544353e5eeb2ed1b1262d75e6a667460badf"
     path = "northridge/N34W119.hgt"
     [[example.files]]
-    size = 21335
-    sha1 = "62167e4c97d46fc319ec81ff6fae2d0f13897117"
+    size = 21311
+    sha1 = "f652ea8b56277d3becc72703d0a282b2ad43fe94"
     path = "northridge/Northridge.ipynb"
     [[example.files]]
     size = 282546
@@ -373,8 +373,8 @@ description = "1994 Northridge earthquake with a kinematic source (gmsh mesh mus
     sha1 = "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
     path = "northridge/output/.empty"
     [[example.files]]
-    size = 1762
-    sha1 = "a55d65e7314d4cbc67517745fb80408153869847"
+    size = 1763
+    sha1 = "811e0787d3352466bfeb333911cb4568e17625bb"
     path = "northridge/parameters.par"
 [[example]]
 parfile = "parameters.par"

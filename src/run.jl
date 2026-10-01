@@ -1,5 +1,3 @@
-const PROXY_NAME = "SeisSol_proxy_Release_dnoarch_4_elastic"
-
 function check_available()
     if !SeisSol_jll.is_available()
         error("""SeisSol_jll is not available for this platform/MPI combination.
@@ -82,9 +80,7 @@ input files. `kernel` is one of `"all"`, `"ader"`, `"localwoader"`, `"local"`, `
 function run_proxy(; kernel::AbstractString = "all", cells::Integer = 100,
                    timesteps::Integer = 1, nthreads::Integer = 1, logfile = nothing)
     check_available()
-    return SeisSol_jll.seissol() do exe
-        proxy = joinpath(dirname(exe), PROXY_NAME * (Sys.iswindows() ? ".exe" : ""))
-        isfile(proxy) || error("proxy executable not found: $proxy")
+    return SeisSol_jll.seissol_proxy() do proxy
         launch(proxy, `$cells $timesteps $kernel`; nprocs = 1, nthreads,
                commthread = false, pin = false, dir = pwd(), logfile)
     end

@@ -2,26 +2,52 @@ using Test
 using SeisSol
 using SeisSol_jll
 
+# There is no SeisSol binary for Windows (see the README); the tests that start the solver are
+# skipped wherever SeisSol_jll is not available.
+const RUN_SOLVER = SeisSol_jll.is_available()
+
 # The first testset mirrors the checks in SeisSol's own CI workflow
 # (SeisSol/.github/workflows/build-seissol.yml): the solver must refuse to run without an
 # input file, and each kernel of the proxy mini-app must run.
 @testset "SeisSol CI checks" begin
-    @test SeisSol_jll.is_available()
-
+    RUN_SOLVER || @info "Skipping tests that start SeisSol: SeisSol_jll is not available on this platform"
     @testset "solver without input fails" begin
-        SeisSol_jll.seissol() do exe
-            proc = run(pipeline(ignorestatus(`$exe`); stdout = devnull, stderr = devnull))
-            @test !success(proc)
+        if RUN_SOLVER
+            SeisSol_jll.seissol() do exe
+                proc = run(pipeline(ignorestatus(`$exe`); stdout = devnull, stderr = devnull))
+                @test !success(proc)
+            end
+        else
+            @test_skip false
         end
     end
 
     @testset "proxy kernel $kernel" for kernel in
                                          ("ader", "localwoader", "local", "neigh", "neigh_dr", "godunov_dr", "all")
-        mktemp() do log, io
-            close(io)
-            @test run_proxy(; kernel, cells = 100, timesteps = 1, logfile = log)
-            @test occursin("PERFORMANCE SUMMARY", read(log, String))
+        if RUN_SOLVER
+            mktemp() do log, io
+                close(io)
+                @test run_proxy(; kernel, cells = 100, timesteps = 1, logfile = log)
+                @test occursin("PERFORMANCE SUMMARY", read(log, String))
+            end
+        else
+            @test_skip false
         end
+    end
+end
+
+@testset "standalone prefix (use without Julia)" begin
+    RUN_SOLVER && @test isfile(seissol_executable())
+    if RUN_SOLVER
+        dir = export_prefix(joinpath(mktempdir(), "prefix"))
+        @test isfile(joinpath(dir, "bin", "seissol")) && isfile(joinpath(dir, "bin", "mpiexec"))
+        # run the exported proxy with an EMPTY environment: everything must be found via RUNPATH
+        out = IOBuffer()
+        cmd = setenv(`$(joinpath(dir, "bin", "seissol_proxy")) 50 1 all`, Dict{String,String}())
+        @test success(pipeline(cmd; stdout = out, stderr = devnull))
+        @test occursin("PERFORMANCE SUMMARY", String(take!(out)))
+    else
+        @test_skip false
     end
 end
 
@@ -86,7 +112,7 @@ end
     end
     io = IOBuffer()
     example_info("kaikoura"; io)
-    @test occursin("needs-asagi", String(take!(io)))
+    @test occursin("runs", String(take!(io)))
 
     # a small example from the SeisSol examples repository (setup files only, no mesh)
     dir = mktempdir()
@@ -94,6 +120,20 @@ end
     @test isfile(par) && basename(par) == "parameters.par"
     @test get_parameter(par, "MeshFile") == "tpv5_f200m.puml.h5"
     @test !isdir(joinpath(dir, "figures"))
+end
+
+@testset "ASAGI example (Sulawesi: 3D velocity model read from NetCDF)" begin
+    @test SeisSol.EXAMPLES["sulawesi"]["status"] == "runs"
+    if RUN_SOLVER
+        par = download_example("sulawesi")
+        dir = dirname(par)
+        set_parameters!(par; EndTime = 0.05)
+        mkpath(joinpath(dir, "output"))
+        @test run_seissol(par; nprocs = 2, logfile = joinpath(dir, "seissol.log"))
+        @test occursin("SeisSol done", read(joinpath(dir, "seissol.log"), String))
+    else
+        @test_skip false
+    end
 end
 
 @testset "TPV13 dynamic rupture example" begin
@@ -115,11 +155,15 @@ end
         return M0.value[end]
     end
 
-    M1 = run_tpv13(1)
-    # reference seismic moment at t = 1 s (SeisSol 1.3.2, order 4, double precision)
-    @test M1 ≈ 3.03e18 rtol = 0.05
-    if Sys.CPU_THREADS >= 2
-        # the result must not depend on the number of MPI ranks (up to round-off/partitioning)
-        @test run_tpv13(2) ≈ M1 rtol = 1e-3
+    if RUN_SOLVER
+        M1 = run_tpv13(1)
+        # reference seismic moment at t = 1 s (SeisSol 1.3.2, order 4, double precision)
+        @test M1 ≈ 3.03e18 rtol = 0.05
+        if Sys.CPU_THREADS >= 2
+            # the result must not depend on the number of MPI ranks (up to round-off/partitioning)
+            @test run_tpv13(2) ≈ M1 rtol = 1e-3
+        end
+    else
+        @test_skip false
     end
 end
