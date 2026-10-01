@@ -47,6 +47,7 @@ installed from GitHub:
 
 ```julia
 using Pkg
+Pkg.add(url="https://github.com/boriskaus/ASAGI_jll.jl")
 Pkg.add(url="https://github.com/boriskaus/easi_jll.jl")
 Pkg.add(url="https://github.com/boriskaus/SeisSol_jll.jl")
 Pkg.add(url="https://github.com/boriskaus/SeisSol.jl")

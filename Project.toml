@@ -4,6 +4,7 @@ authors = ["Boris Kaus <kaus@uni-mainz.de>"]
 version = "0.1.0"
 
 [deps]
+ASAGI_jll = "dfba4624-e288-5d54-9b1c-6ee626323112"
 Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 MPI = "da04e1cc-30fd-572f-bb4f-1f8673147195"
 MPIPreferences = "3da0fdf6-3ccc-4f1b-acd9-58baa6c99267"
@@ -15,10 +16,12 @@ easi_jll = "e5801fad-d0b7-55c4-bd2c-d74fea17eb0c"
 
 # Unregistered until the JLLs are in General (Yggdrasil)
 [sources]
+ASAGI_jll = {url = "https://github.com/boriskaus/ASAGI_jll.jl"}
 SeisSol_jll = {url = "https://github.com/boriskaus/SeisSol_jll.jl"}
 easi_jll = {url = "https://github.com/boriskaus/easi_jll.jl"}
 
 [compat]
+ASAGI_jll = "1.0.1"
 Downloads = "1"
 MPI = "0.20"
 MPIPreferences = "0.1"
