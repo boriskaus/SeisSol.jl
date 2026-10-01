@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: SeisSol.jl
+type: software
+message: >-
+  SeisSol.jl is only a thin wrapper. If you use it, please cite SeisSol itself
+  (https://github.com/SeisSol/SeisSol) and the SeisSol papers listed in the README.
+authors:
+  - given-names: Boris
+    family-names: Kaus
+    email: kaus@uni-mainz.de
+repository-code: 'https://github.com/boriskaus/SeisSol.jl'
+license: MIT
+references:
+  - type: software
+    title: SeisSol
+    url: 'https://seissol.org'
+    repository-code: 'https://github.com/SeisSol/SeisSol'
+    license: BSD-3-Clause
+    authors:
+      - name: The SeisSol group (LMU Munich, TU Munich, UC San Diego and contributors)

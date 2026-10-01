@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+    tags: '*'
+
+# Cancel redundant CI tests automatically
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - '1'
+        os:
+          - ubuntu-latest
+          - macOS-15-intel      # Intel macs
+          - windows-latest
+        arch:
+          - x64
+        include:
+          - os: macOS-latest    # Apple silicon
+            arch: aarch64
+            version: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: ${{ matrix.version }}
+          arch: ${{ matrix.arch }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.julia/artifacts
+          key: ${{ runner.os }}-${{ matrix.arch }}-artifacts-${{ hashFiles('**/Project.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.arch }}-artifacts-
+      - uses: julia-actions/julia-buildpkg@v1
+      - name: Remove macOS quarantine from Julia artifacts
+        if: runner.os == 'macOS'
+        run: xattr -r -d com.apple.quarantine ~/.julia/artifacts/ || true
+      # Pkg.test() cannot be used while SeisSol_jll/easi_jll are unregistered ([sources] in
+      # Project.toml), so the test file is run directly in the package environment.
+      - name: Run tests
+        run: julia --project=. --color=yes test/runtests.jl
