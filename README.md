@@ -75,10 +75,12 @@ Main functions (see their docstrings):
 |---|---|
 | `run_seissol(parfile; nprocs, nthreads, ...)` | run SeisSol with MPI (+ OpenMP; 1 thread per rank by default when `nprocs > 1`) |
 | `run_proxy(; kernel, cells, timesteps)` | SeisSol's kernel benchmark (needs no input) |
-| `download_example(name)`, `examples()` | fetch an example setup (currently `"tpv13"`) |
+| `examples()`, `example_info(name)`, `download_example(name)` | list, describe and download the example setups of the SeisSol training material and examples repository (checksum-verified) |
 | `get_parameter`, `set_parameters!`, `delete_parameter!` | edit SeisSol parameter files |
 | `read_energy`, `moment_magnitude` | read `*-energy.csv`, compute Mw |
 | `citation()` | print the references to cite |
+
+`examples()` lists 24 setups: `"tpv13"` and `"earthquake-tsunami"` are known to run with the bundled binary; `"kaikoura"`, `"sulawesi"` need a binary with ASAGI; the `"examples/..."` entries (SCEC benchmarks) only contain the setup files, their meshes must be generated with gmsh and PUMGen. `example_info(name)` shows the status.
 
 Visualise the XDMF/HDF5 output (fault and free-surface fields) with [ParaView](https://www.paraview.org).
 
@@ -100,8 +102,9 @@ The SeisSol team acknowledges Martin Käser and Michael Dumbser, originators of 
 version of SeisSol, and early contributors Cristobal Castro, Verena Hermann and Josep de la
 Puente. SeisSol is released under the BSD-3-Clause license:
 <https://github.com/SeisSol/SeisSol> · <https://seissol.org> · <https://seissol.readthedocs.io>.
-The example setup (TPV13 on a coarse mesh) is taken from the
-[SeisSol training material](https://github.com/SeisSol/Training) (BSD-3-Clause) and implements the
+The example setups are taken from the
+[SeisSol training material](https://github.com/SeisSol/Training) and the
+[SeisSol examples](https://github.com/SeisSol/Examples) (both BSD-3-Clause); TPV13 and the other `tpv*` cases implement the
 SCEC/USGS dynamic rupture benchmark (Harris et al., 2009, *Seismol. Res. Lett.* 80(1),
 doi:[10.1785/gssrl.80.1.119](https://doi.org/10.1785/gssrl.80.1.119)).
 

@@ -15,10 +15,10 @@ laptops and workstations. For production runs on HPC systems build an optimised 
 """
 module SeisSol
 
-using Downloads, MPI, MPIPreferences, Printf, SHA
+using Downloads, MPI, MPIPreferences, Printf, SHA, TOML
 using SeisSol_jll
 
-export run_seissol, run_proxy, download_example, examples,
+export run_seissol, run_proxy, download_example, examples, example_info,
        get_parameter, set_parameters!, delete_parameter!,
        read_energy, moment_magnitude, citation
 

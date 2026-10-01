@@ -1,0 +1,1156 @@
+[[example]]
+parfile = "parameters.par"
+name = "tpv13"
+repo = "SeisSol/Training"
+folder = "tpv13"
+commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
+status = "runs"
+description = "SCEC TPV13: spontaneous rupture on a normal fault with off-fault plasticity (coarse mesh, 37k tetrahedra)"
+
+    [[example.files]]
+    size = 3799654
+    sha1 = "138a7cb3f93a485167a36b82a6023c6503eb6da9"
+    path = "tpv13/figures/paraview.jpg"
+    [[example.files]]
+    size = 55904
+    sha1 = "791776d6918a59dbb09dc9b2d855ca3d0ffa254e"
+    path = "tpv13/figures/tpv13.jpg"
+    [[example.files]]
+    size = 2650
+    sha1 = "a63d24f2dd5a4f6fc19d29ae373c7845319ecb93"
+    path = "tpv13/parameters.par"
+    [[example.files]]
+    size = 953
+    sha1 = "d2141e3bec5024c7186eba6a6d5b22e5f209cac7"
+    path = "tpv13/tpv12_13_fault.yaml"
+    [[example.files]]
+    size = 823
+    sha1 = "3490980540982b459fab03e85dcaf819e5074e90"
+    path = "tpv13/tpv12_13_initial_stress.yaml"
+    [[example.files]]
+    size = 296
+    sha1 = "bf375b2494550ce1d5d1651c49562c5275d812fd"
+    path = "tpv13/tpv12_13_material.yaml"
+    [[example.files]]
+    size = 20236
+    sha1 = "b636a730ad0c682b03e625ed6fc1fa8fa96344e6"
+    path = "tpv13/tpv13.ipynb"
+    [[example.files]]
+    size = 249416
+    sha1 = "4d112c5a44943f9d1d3cd15b0b03142f673d17fc"
+    path = "tpv13/tpv13_qwx.ipynb"
+    [[example.files]]
+    size = 2688
+    sha1 = "6865c03798bb78f974b6ac983ac0221c09d8dd87"
+    path = "tpv13/tpv13_training.geo"
+    [[example.files]]
+    size = 1655360
+    sha1 = "ff3632c60f184d3835f2b82d97280c50b47f20fb"
+    path = "tpv13/tpv13_training.puml.h5"
+[[example]]
+parfile = "parameters_qwx.par"
+name = "earthquake-tsunami"
+repo = "SeisSol/Training"
+folder = "earthquake-tsunami"
+commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
+status = "runs"
+description = "Dynamic rupture of a subduction-type fault with the free-surface response (two meshes: 105k and 225k tetrahedra)"
+
+    [[example.files]]
+    size = 1143
+    sha1 = "ab9c38224b9122969b6141024861283fe961c386"
+    path = "earthquake-tsunami/fault.yaml"
+    [[example.files]]
+    size = 314278
+    sha1 = "c31ce9d1a48f2d331ddcc98e09894f41aae514a4"
+    path = "earthquake-tsunami/figures/Figure01.png"
+    [[example.files]]
+    size = 324670
+    sha1 = "92625d356e783b994206a2c790e9af6e7ee373e7"
+    path = "earthquake-tsunami/figures/Figure02.png"
+    [[example.files]]
+    size = 29195
+    sha1 = "c20d33f8f367f00c1aa0dfa87f9b9495b5e0ee7a"
+    path = "earthquake-tsunami/figures/launch.png"
+    [[example.files]]
+    size = 356
+    sha1 = "63769cbd9a3a4c767f2fc4381c2b147b7403402f"
+    path = "earthquake-tsunami/material_WL.yaml"
+    [[example.files]]
+    size = 4717288
+    sha1 = "ab62f0cb7d53951fdca50f4c0d4e8e5e6891ef51"
+    path = "earthquake-tsunami/mesh_ttpv1_105k.puml.h5"
+    [[example.files]]
+    size = 10077176
+    sha1 = "517041222697b393327e8667f57d40828dd36b88"
+    path = "earthquake-tsunami/mesh_ttpv2_225k.puml.h5"
+    [[example.files]]
+    size = 3198
+    sha1 = "4f20c588457ae2a192c98c69ff591454440546ab"
+    path = "earthquake-tsunami/parameters_qwx.par"
+    [[example.files]]
+    size = 429375
+    sha1 = "eb774cae17f7957a39ddfe6fccf9d4dfdc83218a"
+    path = "earthquake-tsunami/ttpv_qwx.ipynb"
+[[example]]
+parfile = "parameters_qwx.par"
+name = "cdb_tpv23"
+repo = "SeisSol/Training"
+folder = "cdb_tpv23"
+commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
+status = "unverified"
+description = "SCEC TPV23 style rupture with a fault-zone (damage) material; a quick test with the bundled binary produced NaNs"
+
+    [[example.files]]
+    size = 1050345
+    sha1 = "7d93350baa2e923a9738a0130e898d96d426a4cf"
+    path = "cdb_tpv23/cdb_tpv23_qwx.ipynb"
+    [[example.files]]
+    size = 34590
+    sha1 = "703e18a993aafeae3de77ea9c8df8a516005dac4"
+    path = "cdb_tpv23/figures/off_fault_damage.png"
+    [[example.files]]
+    size = 229209
+    sha1 = "d94949c31cb9367a1f887eefdcfc2bad027d7120"
+    path = "cdb_tpv23/figures/tpv23.png"
+    [[example.files]]
+    size = 3798
+    sha1 = "b434980ef172c645c91889bae0fe9b1531ea5a7b"
+    path = "cdb_tpv23/parameters_qwx.par"
+    [[example.files]]
+    size = 9521072
+    sha1 = "a76ab6bed61786dc259e688e4e1983dd26a01604"
+    path = "cdb_tpv23/stepover23_3km_qwx.puml.h5"
+    [[example.files]]
+    size = 595
+    sha1 = "0ffd037d61d3b49774da42fb2ed0e24b31bd5943"
+    path = "cdb_tpv23/tpv23_3km_faultreceivers.dat"
+    [[example.files]]
+    size = 1157
+    sha1 = "6a342ed9982d226259aaecfc48b5b27eb74df155"
+    path = "cdb_tpv23/tpv23_damMaterial.yaml"
+    [[example.files]]
+    size = 1238
+    sha1 = "908d155067bd3395f309ca5d8d47a48fa24e7605"
+    path = "cdb_tpv23/tpv23_fault.yaml"
+    [[example.files]]
+    size = 95
+    sha1 = "8fbe7a8364e7082fb213c61d5246b795d35286a3"
+    path = "cdb_tpv23/tpv23_receivers.dat"
+[[example]]
+parfile = "parametersLSW.par"
+name = "kaikoura"
+repo = "SeisSol/Training"
+folder = "kaikoura"
+commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
+status = "needs-asagi"
+description = "2016 Kaikoura earthquake (New Zealand), linear slip weakening (parametersLSW.par) and rate-and-state (parametersRS.par); 3D structure read with ASAGI"
+
+    [[example.files]]
+    size = 13203
+    sha1 = "58de22f2a5e28501c54b7cb127f604a432d6d1bc"
+    path = "kaikoura/Kaikoura.ipynb"
+    [[example.files]]
+    size = 8304013
+    sha1 = "f49cfe8d7bc6b13d42d93f0a77673adad34d889e"
+    path = "kaikoura/NZ_asagi_40_4.nc"
+    [[example.files]]
+    size = 5884813
+    sha1 = "e9e7c7cc509c027c918d4b75cffda5c07307b28e"
+    path = "kaikoura/NZ_asagi_7_4.nc"
+    [[example.files]]
+    size = 937
+    sha1 = "d702d8edf56790139e17a54f29d60b0c7ba73a37"
+    path = "kaikoura/NZ_faultLSW.yaml"
+    [[example.files]]
+    size = 1261
+    sha1 = "74e266e3af3bc9a9ecd9538d2e7856d21800df4f"
+    path = "kaikoura/NZ_faultRS.yaml"
+    [[example.files]]
+    size = 4240
+    sha1 = "607abb8a0153c0e1e1407ca62e9141de9222249c"
+    path = "kaikoura/NZ_initial_stressLSW.yaml"
+    [[example.files]]
+    size = 4259
+    sha1 = "400a5b8bf561fe02cb46822a64cdaf67195a093e"
+    path = "kaikoura/NZ_initial_stressRS.yaml"
+    [[example.files]]
+    size = 1349
+    sha1 = "dd3c8f72609158e841466c78756933aa0d8b1b88"
+    path = "kaikoura/NZ_materialLSW.yaml"
+    [[example.files]]
+    size = 1348
+    sha1 = "75edbcdaa6ab7adf5992b570c38dfe99ea483b50"
+    path = "kaikoura/NZ_materialRS.yaml"
+    [[example.files]]
+    size = 1676
+    sha1 = "6cb021d4961058da96f09c67c500fa656573f865"
+    path = "kaikoura/NZ_nucleation_stressRS.yaml"
+    [[example.files]]
+    size = 844
+    sha1 = "ed15012624cc343fef83eea65fa983519ee18b27"
+    path = "kaikoura/NZ_rhomulambda_large.yaml"
+    [[example.files]]
+    size = 168
+    sha1 = "17f9331613d481519fd46d76fb6b024617540ebb"
+    path = "kaikoura/NZ_sigzz.yaml"
+    [[example.files]]
+    size = 12497016
+    sha1 = "ca791dcd5e7d25b4f01f1ff581e77659bb3e7da7"
+    path = "kaikoura/NZmicro_full1500_small_box_only.puml.h5"
+    [[example.files]]
+    size = 1008
+    sha1 = "f00ed8b0c862296fdc7a9e2f1e4033e014e50680"
+    path = "kaikoura/NZmicro_full1500_small_box_only.xdmf"
+    [[example.files]]
+    size = 3456782
+    sha1 = "f0c2de45395cdd037df6988322729a13016d3496"
+    path = "kaikoura/figures/Kaikoura_Fig1.png"
+    [[example.files]]
+    size = 1083423
+    sha1 = "350ad847bc2436e7de02b03e4cdda64eee67aa14"
+    path = "kaikoura/figures/Kaikoura_Fig2.png"
+    [[example.files]]
+    size = 2410586
+    sha1 = "4cd7c6401c4f0ede6f1978569ea90238a8b24ab8"
+    path = "kaikoura/figures/Kaikoura_Fig3.png"
+    [[example.files]]
+    size = 1296837
+    sha1 = "2ed11f1d6d217a61a7968099619a49862c617ce1"
+    path = "kaikoura/figures/Kaikoura_Fig4.png"
+    [[example.files]]
+    size = 405766
+    sha1 = "b34ee88a9c42016863477b834c0a529aed8b90ff"
+    path = "kaikoura/kaikoura_qwx.ipynb"
+    [[example.files]]
+    size = 3827
+    sha1 = "e2f279bf3fbb408c9eead89934e4890c4d9a4d04"
+    path = "kaikoura/parametersLSW.par"
+    [[example.files]]
+    size = 3922
+    sha1 = "9dd594ecec14baed4fc3f8cc87b4a26c3675aa51"
+    path = "kaikoura/parametersRS.par"
+    [[example.files]]
+    size = 434
+    sha1 = "2d46bded8c36c21c2a488d31d4af2b806d36907c"
+    path = "kaikoura/recenter.sh"
+[[example]]
+parfile = "parametersLSW.par"
+name = "sulawesi"
+repo = "SeisSol/Training"
+folder = "sulawesi"
+commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
+status = "needs-asagi"
+description = "2018 Palu (Sulawesi) earthquake with 3D velocity model read with ASAGI"
+
+    [[example.files]]
+    size = 1166281
+    sha1 = "5e856ee07ac2feaa4152983bdd4c0bc691f1905d"
+    path = "sulawesi/3dvel_Sulawesi.nc"
+    [[example.files]]
+    size = 218985
+    sha1 = "02243a86e1d15e4bcf3e196d0104dc7dae132554"
+    path = "sulawesi/3dvel_Sulawesi_BMKG.nc"
+    [[example.files]]
+    size = 1698
+    sha1 = "6a52b8565dae14b819897098da7b8ef14f4df4d8"
+    path = "sulawesi/GPSfiltered_proj_200m_8e6.dat"
+    [[example.files]]
+    size = 9737880
+    sha1 = "bf97db0eb0ba2f8fe1d48f174979659c1146dd8c"
+    path = "sulawesi/Sulawesi_65dip_straightBay_ShortNorth_micro"
+    [[example.files]]
+    size = 1024
+    sha1 = "d46e379600bfe9e02bf4466412db9e23f5b69bd6"
+    path = "sulawesi/Sulawesi_65dip_straightBay_ShortNorth_micro.xdmf"
+    [[example.files]]
+    size = 766
+    sha1 = "5bf7993adc41f3fac59db768993676cdbba58405"
+    path = "sulawesi/Sulawesi_faultLSW.yaml"
+    [[example.files]]
+    size = 763
+    sha1 = "8a9560d219c58911b8bfc87d6f49c2b4fedc1c6e"
+    path = "sulawesi/Sulawesi_faultRS.yaml"
+    [[example.files]]
+    size = 1516
+    sha1 = "1662a7608eed6ef7b0cd4d9501baa4b8beb5e3a9"
+    path = "sulawesi/Sulawesi_initial_stressLSW.yaml"
+    [[example.files]]
+    size = 1516
+    sha1 = "0acbd0a74d4704e50e06a141a12d795d91421202"
+    path = "sulawesi/Sulawesi_initial_stressRS.yaml"
+    [[example.files]]
+    size = 1294
+    sha1 = "cb3b542c28d685341789cb6a6197465929e257ec"
+    path = "sulawesi/Sulawesi_material3dLSW.yaml"
+    [[example.files]]
+    size = 1293
+    sha1 = "d30336113b799eb3fbce62fc6fdc71dd49db2c90"
+    path = "sulawesi/Sulawesi_material3dRS.yaml"
+    [[example.files]]
+    size = 1231
+    sha1 = "fed61d44a4e718c8997a59cada9e9e42a01d5838"
+    path = "sulawesi/Sulawesi_nucleation_stressRS.yaml"
+    [[example.files]]
+    size = 1046236
+    sha1 = "8d03c2f6d0a8901db190281b10b0b6d2333bf9b2"
+    path = "sulawesi/Ulrich19_Fig1.png"
+    [[example.files]]
+    size = 728146
+    sha1 = "99182bcf2ee6c00540f0b1a132b563b29069267a"
+    path = "sulawesi/Ulrich19_Fig3.png"
+    [[example.files]]
+    size = 41
+    sha1 = "f3c4c9585c3c84802fbbab66039176ec3011ac30"
+    path = "sulawesi/faultreceiver_hypocenter.dat"
+    [[example.files]]
+    size = 3519
+    sha1 = "f2a529212b701fe4184e64f10a569115c4efc3c6"
+    path = "sulawesi/parametersLSW.par"
+    [[example.files]]
+    size = 3510
+    sha1 = "753e173bc2dd2e53598f9032ce58fede68e09154"
+    path = "sulawesi/parametersRS.par"
+    [[example.files]]
+    size = 12894
+    sha1 = "226790d28a091b2310ee21600531c5ef91c77fda"
+    path = "sulawesi/sulawesi.ipynb"
+[[example]]
+parfile = "parameters.par"
+name = "northridge"
+repo = "SeisSol/Training"
+folder = "northridge"
+commit = "7436574a00888541a600e4f5910681b71b6a8a4d"
+status = "needs-mesh"
+description = "1994 Northridge earthquake with a kinematic source (gmsh mesh must be converted with PUMGen, SRF source needs the NRF converter)"
+
+    [[example.files]]
+    size = 2884802
+    sha1 = "18f6544353e5eeb2ed1b1262d75e6a667460badf"
+    path = "northridge/N34W119.hgt"
+    [[example.files]]
+    size = 21335
+    sha1 = "62167e4c97d46fc319ec81ff6fae2d0f13897117"
+    path = "northridge/Northridge.ipynb"
+    [[example.files]]
+    size = 282546
+    sha1 = "97b3f4244e6cc1355899cb4fba1845bc468b5c3b"
+    path = "northridge/Northridge_DynRup.png"
+    [[example.files]]
+    size = 593653
+    sha1 = "e9871ed5bc98a972b320d41b5ea8396d4ca243bd"
+    path = "northridge/Northridge_mesh.png"
+    [[example.files]]
+    size = 379873
+    sha1 = "b3f28320667303068c74a86b86faf4f2dada4267"
+    path = "northridge/SourceModel.png"
+    [[example.files]]
+    size = 507608
+    sha1 = "3c538b5410df01841317791e7f6f01dda11d24d2"
+    path = "northridge/TabordaRoten2015.png"
+    [[example.files]]
+    size = 164673
+    sha1 = "1a2dd6256d077259b5a496e2f482675847f7bc4d"
+    path = "northridge/easi.png"
+    [[example.files]]
+    size = 14810808
+    sha1 = "45062921f46f383377e7c80f92dd7c407691f8c8"
+    path = "northridge/mesh_northridge.msh"
+    [[example.files]]
+    size = 874
+    sha1 = "c0fb3b341a7cc7669aececffea8ccf52abd0bd64"
+    path = "northridge/northridge_material.yaml"
+    [[example.files]]
+    size = 25480665
+    sha1 = "2332de2d383b4863a6d527c9cf5c754ebb6c25a6"
+    path = "northridge/northridge_resampled.srf"
+    [[example.files]]
+    size = 65
+    sha1 = "0c40c96a0d873c2b48b2aca92181c5312550cf57"
+    path = "northridge/offreceivers.dat"
+    [[example.files]]
+    size = 0
+    sha1 = "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    path = "northridge/output/.empty"
+    [[example.files]]
+    size = 1762
+    sha1 = "a55d65e7314d4cbc67517745fb80408153869847"
+    path = "northridge/parameters.par"
+[[example]]
+parfile = "parameters.par"
+name = "examples/Northridge"
+repo = "SeisSol/Examples"
+folder = "Northridge"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "Northridge earthquake. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 1146
+    sha1 = "1770898368e8d3ef1889902951f94bb97b1e927a"
+    path = "Northridge/generate_material_using_SCEC_CVM-H_1D.py"
+    [[example.files]]
+    size = 303
+    sha1 = "4e37bbb3bd1442b57e3aeee1caa3cfc19a5e04a4"
+    path = "Northridge/generating_the_mesh.sh"
+    [[example.files]]
+    size = 856
+    sha1 = "f7bb8f56450059673686ea0eb98fdd38b58f6fba"
+    path = "Northridge/generating_the_nrf.sh"
+    [[example.files]]
+    size = 4008
+    sha1 = "e0eb48e6c5be93dc047256875f2b6511704a2523"
+    path = "Northridge/mesh_northridge.geo"
+    [[example.files]]
+    size = 874
+    sha1 = "c0fb3b341a7cc7669aececffea8ccf52abd0bd64"
+    path = "Northridge/northridge_material.yaml"
+    [[example.files]]
+    size = 133941
+    sha1 = "5671756aa55ef8618bf989c036561e763c993dc1"
+    path = "Northridge/nr6.70-s0000-h0000.txt"
+    [[example.files]]
+    size = 65
+    sha1 = "0c40c96a0d873c2b48b2aca92181c5312550cf57"
+    path = "Northridge/offreceivers.dat"
+    [[example.files]]
+    size = 1744
+    sha1 = "3d5245992f3e03f7a683067e1d8cecabc26c2b77"
+    path = "Northridge/parameters.par"
+[[example]]
+parfile = "parameters.par"
+name = "examples/Northridge_FL33"
+repo = "SeisSol/Examples"
+folder = "Northridge_FL33"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "Northridge earthquake with friction law 33. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 577
+    sha1 = "10761d80c4b709e0f7bb2c007174ed96bb2dc909"
+    path = "Northridge_FL33/downloading_srf_and_generate_FL33_files.sh"
+    [[example.files]]
+    size = 36
+    sha1 = "f09453c3a7c39d651346dbb876994651f6f337b9"
+    path = "Northridge_FL33/generating_the_mesh.sh"
+    [[example.files]]
+    size = 3903
+    sha1 = "a227053a7253c3be09c4cf00d87006f092273606"
+    path = "Northridge_FL33/mesh_northridge.geo"
+    [[example.files]]
+    size = 38
+    sha1 = "2405266d3db2cd9ba80b91667389629d132a7b36"
+    path = "Northridge_FL33/northridge_material.yaml"
+    [[example.files]]
+    size = 30
+    sha1 = "a3ccc4dedb1c345355254ea7ec189d7152e3ad8e"
+    path = "Northridge_FL33/offreceivers.dat"
+    [[example.files]]
+    size = 2744
+    sha1 = "d04820ec85c70fbe8213ac2fdbb903ce3232207d"
+    path = "Northridge_FL33/parameters.par"
+[[example]]
+parfile = "parameters.par"
+name = "examples/WP2_LOH1"
+repo = "SeisSol/Examples"
+folder = "WP2_LOH1"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "LOH.1 wave propagation benchmark. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 756
+    sha1 = "f8e3ef370a1ce284256a0e23c7998a60834a14d1"
+    path = "WP2_LOH1/generate_LOH_source.py"
+    [[example.files]]
+    size = 1151
+    sha1 = "62c213c6f1cd54e88b62869b0c008cb2dba41bca"
+    path = "WP2_LOH1/generate_LOH_source_type50.py"
+    [[example.files]]
+    size = 208
+    sha1 = "22fc53555cdc639eab2ca296f577eb4f5778a2b3"
+    path = "WP2_LOH1/generate_and_convert_source.sh"
+    [[example.files]]
+    size = 291
+    sha1 = "069c3825d1eadcec88d796f9e7c17394ad92f478"
+    path = "WP2_LOH1/generating_the_mesh.sh"
+    [[example.files]]
+    size = 2396
+    sha1 = "7630b1b0a2210c8de13a98952393337c3c2ce4ea"
+    path = "WP2_LOH1/loh.geo"
+    [[example.files]]
+    size = 313
+    sha1 = "290a47f91c71f13fb53b8eeae3818b5c907ee58d"
+    path = "WP2_LOH1/loh1.yaml"
+    [[example.files]]
+    size = 1548
+    sha1 = "f8c0abaf39689545f01056c0391579db4ad9dbf6"
+    path = "WP2_LOH1/parameters.par"
+    [[example.files]]
+    size = 1513
+    sha1 = "86a357362f2628db1fa513a09896ebc9c2adffb5"
+    path = "WP2_LOH1/parameters_source_type_50.par"
+    [[example.files]]
+    size = 403
+    sha1 = "9a7a431edbe821195b1a4e89db301a93c8b66d23"
+    path = "WP2_LOH1/recordPoints.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/WP2_LOH3"
+repo = "SeisSol/Examples"
+folder = "WP2_LOH3"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "LOH.3 wave propagation benchmark (viscoelastic). Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 399
+    sha1 = "75739ed90adb13ef35b9e75fed216a050adedd7e"
+    path = "WP2_LOH3/loh3.yaml"
+    [[example.files]]
+    size = 16
+    sha1 = "867c5081e86d0cfa54fbd7be77181639a890ab71"
+    path = "WP2_LOH3/mesh_file"
+    [[example.files]]
+    size = 1649
+    sha1 = "a16ec460f4d9418dad8f5c1f0b353d68ce4378ff"
+    path = "WP2_LOH3/parameters.par"
+    [[example.files]]
+    size = 395
+    sha1 = "8d676a7aa40f303e937b90d8896945b5b34faad3"
+    path = "WP2_LOH3/recordPoints.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/convergence_acoustic_elastic"
+repo = "SeisSol/Examples"
+folder = "convergence_acoustic_elastic"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "Plane-wave convergence test (acoustic-elastic). Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 2599
+    sha1 = "6096f50b5ca8017d8125372aec196805d985eca7"
+    path = "convergence_acoustic_elastic/README.md"
+    [[example.files]]
+    size = 95
+    sha1 = "2dde5464e703c62ca38e31a7396b1f2c6f6c3820"
+    path = "convergence_acoustic_elastic/convergence_ocean/material.yaml"
+    [[example.files]]
+    size = 1782
+    sha1 = "78cdb702672c26dcb4aef92067779f5828592745"
+    path = "convergence_acoustic_elastic/convergence_ocean/mesh_template.geo"
+    [[example.files]]
+    size = 2
+    sha1 = "72e8ffc0db8aad71a934dd11e5968bd5109e54b4"
+    path = "convergence_acoustic_elastic/convergence_ocean/meshes/.gitignore"
+    [[example.files]]
+    size = 2
+    sha1 = "72e8ffc0db8aad71a934dd11e5968bd5109e54b4"
+    path = "convergence_acoustic_elastic/convergence_ocean/output/.gitignore"
+    [[example.files]]
+    size = 1141
+    sha1 = "bacba7cf55bf44e31044c6b4a9d65103e8dfd9d1"
+    path = "convergence_acoustic_elastic/convergence_ocean/parameters.par"
+    [[example.files]]
+    size = 85
+    sha1 = "4c2865b8b9ac9b7ba66e5c0d6640e77cd1be7cf5"
+    path = "convergence_acoustic_elastic/convergence_ocean/recordPoints.dat"
+    [[example.files]]
+    size = 42
+    sha1 = "3eb9f80d4616b616e979d0bc70e4749f521ca4af"
+    path = "convergence_acoustic_elastic/convergence_ocean/rigid.yaml"
+    [[example.files]]
+    size = 421
+    sha1 = "de8e364ef96bf3487d016317b5ca20160eee79c8"
+    path = "convergence_acoustic_elastic/convergence_scholte/material.yaml"
+    [[example.files]]
+    size = 1763
+    sha1 = "79d4ba300ba16aff814afb912f3f89df2150b899"
+    path = "convergence_acoustic_elastic/convergence_scholte/mesh_template.geo"
+    [[example.files]]
+    size = 2
+    sha1 = "72e8ffc0db8aad71a934dd11e5968bd5109e54b4"
+    path = "convergence_acoustic_elastic/convergence_scholte/meshes/.gitignore"
+    [[example.files]]
+    size = 942
+    sha1 = "42dd386f4535c239216f4ee0319e3174efe0cdbd"
+    path = "convergence_acoustic_elastic/convergence_scholte/parameters.par"
+    [[example.files]]
+    size = 85
+    sha1 = "4c2865b8b9ac9b7ba66e5c0d6640e77cd1be7cf5"
+    path = "convergence_acoustic_elastic/convergence_scholte/recordPoints.dat"
+    [[example.files]]
+    size = 421
+    sha1 = "82ed5a871250a3d118b1fa5341a0269d192cc9a3"
+    path = "convergence_acoustic_elastic/convergence_snell/material.yaml"
+    [[example.files]]
+    size = 1691
+    sha1 = "6a1ab862b4a4a016e4a3a2445433b731c69da697"
+    path = "convergence_acoustic_elastic/convergence_snell/mesh_template.geo"
+    [[example.files]]
+    size = 2
+    sha1 = "72e8ffc0db8aad71a934dd11e5968bd5109e54b4"
+    path = "convergence_acoustic_elastic/convergence_snell/meshes/.gitignore"
+    [[example.files]]
+    size = 995
+    sha1 = "097b67adabe6edf47a11b02732bf33930d099b3e"
+    path = "convergence_acoustic_elastic/convergence_snell/parameters.par"
+    [[example.files]]
+    size = 85
+    sha1 = "4c2865b8b9ac9b7ba66e5c0d6640e77cd1be7cf5"
+    path = "convergence_acoustic_elastic/convergence_snell/recordPoints.dat"
+    [[example.files]]
+    size = 1173
+    sha1 = "51cf779bb9c63d02e481008e1204f74e6c00477e"
+    path = "convergence_acoustic_elastic/mesh_convergence.sh"
+[[example]]
+parfile = "parameters.par"
+name = "examples/convergence_elastic"
+repo = "SeisSol/Examples"
+folder = "convergence_elastic"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "Plane-wave convergence test (elastic). Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 707
+    sha1 = "ed067c0ac83d40094faea7446896c80d4f6673b8"
+    path = "convergence_elastic/README.md"
+    [[example.files]]
+    size = 3244
+    sha1 = "de5c5271160424cc8ad07ed3eea33427ba4d9d11"
+    path = "convergence_elastic/elastic_convergence_runner/__main__.py"
+    [[example.files]]
+    size = 3316
+    sha1 = "a9e9e46772954db30c1f56e066d1a721cac1d6d7"
+    path = "convergence_elastic/elastic_convergence_runner/runner.py"
+    [[example.files]]
+    size = 823
+    sha1 = "f36d2fb056cf45ffd4a5786389c69669d3df246d"
+    path = "convergence_elastic/elastic_convergence_runner/template/parameters.tmpl"
+    [[example.files]]
+    size = 41
+    sha1 = "8351ff0ec90511284bddc20bdbbe2b20cd58df10"
+    path = "convergence_elastic/requirements.txt"
+    [[example.files]]
+    size = 417
+    sha1 = "e7075b816ef0885ad5c061065d74ac45b66995c2"
+    path = "convergence_elastic/static_files/generateCubes.sh"
+    [[example.files]]
+    size = 57
+    sha1 = "1d2ef4c9bcc3712fdbccf44e6d4df6f534f8a1fd"
+    path = "convergence_elastic/static_files/material.yaml"
+    [[example.files]]
+    size = 1573
+    sha1 = "a58b42e4f601a6c5754e1358f392ce2e8982b5ee"
+    path = "convergence_elastic/static_files/parameters.par"
+    [[example.files]]
+    size = 85
+    sha1 = "4c2865b8b9ac9b7ba66e5c0d6640e77cd1be7cf5"
+    path = "convergence_elastic/static_files/recordPoints.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv101"
+repo = "SeisSol/Examples"
+folder = "tpv101"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV101: rate-and-state friction. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 31
+    sha1 = "1cb5d183f709935f72822c4979e2409d4032bb24"
+    path = "tpv101/mesh_file"
+    [[example.files]]
+    size = 3414
+    sha1 = "53d28563f5ae848dfa69d0122761639954d55104"
+    path = "tpv101/parameters.par"
+    [[example.files]]
+    size = 1011
+    sha1 = "0b26331577d03b9d94dfcb68c9752dfbca8f58f5"
+    path = "tpv101/tpv101_fault.yaml"
+    [[example.files]]
+    size = 115
+    sha1 = "4c55cb3d79f15b07be1bc6f02ae25cbf48a78e89"
+    path = "tpv101/tpv101_faultreceivers.dat"
+    [[example.files]]
+    size = 78
+    sha1 = "874d5a4ad59ed537b641af01bbbbc6daaccf6aee"
+    path = "tpv101/tpv101_material.yaml"
+    [[example.files]]
+    size = 95
+    sha1 = "d6de5b331befd2079c9482d8739dd48918d11627"
+    path = "tpv101/tpv101_receivers.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv104"
+repo = "SeisSol/Examples"
+folder = "tpv104"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV104: rate-and-state with fast velocity weakening. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 1256
+    sha1 = "0e3eb0cad81f17c53da37cda8d015fae820f819a"
+    path = "tpv104/fault.yaml"
+    [[example.files]]
+    size = 462
+    sha1 = "e1ae668e53857f01949be1e85fb5f07c21543dd9"
+    path = "tpv104/generating_the_mesh.sh"
+    [[example.files]]
+    size = 78
+    sha1 = "874d5a4ad59ed537b641af01bbbbc6daaccf6aee"
+    path = "tpv104/material.yaml"
+    [[example.files]]
+    size = 2594
+    sha1 = "f2b8188883d5733ee8af43a019a32ff06ed21534"
+    path = "tpv104/parameters.par"
+    [[example.files]]
+    size = 66353
+    sha1 = "ebe4efd2f29eb829130608c7245e8f28bb57423f"
+    path = "tpv104/tpv104-RF.png"
+    [[example.files]]
+    size = 115
+    sha1 = "4c55cb3d79f15b07be1bc6f02ae25cbf48a78e89"
+    path = "tpv104/tpv104_faultreceivers.dat"
+    [[example.files]]
+    size = 2464
+    sha1 = "ad22dc4e18b7e7e07a02bb17d38d0a725ea83527"
+    path = "tpv104/tpv104_half.geo"
+    [[example.files]]
+    size = 83
+    sha1 = "ef9c81afbfe9304f7df758e3152f431bfb37e14c"
+    path = "tpv104/tpv104_receivers.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv105"
+repo = "SeisSol/Examples"
+folder = "tpv105"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV105: rate-and-state with strong velocity weakening. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 462
+    sha1 = "8276116c05a1e2740db260df35ff7f91269f2b96"
+    path = "tpv105/generating_the_mesh.sh"
+    [[example.files]]
+    size = 3595
+    sha1 = "09f398ed2d4acdea0b93e7893deee85260361d58"
+    path = "tpv105/parameters.par"
+    [[example.files]]
+    size = 1785
+    sha1 = "79c3529485d9779b4beeb8fb513e4c11414c7d43"
+    path = "tpv105/tpv105_fault.yaml"
+    [[example.files]]
+    size = 206
+    sha1 = "8fe2e751f4b4c8c210285638954d68a7f1c38623"
+    path = "tpv105/tpv105_fault_receivers.dat"
+    [[example.files]]
+    size = 2719
+    sha1 = "bf31a1c0cf1400d0f8a773d0b14cb248e7b9c740"
+    path = "tpv105/tpv105_half.geo"
+    [[example.files]]
+    size = 78
+    sha1 = "874d5a4ad59ed537b641af01bbbbc6daaccf6aee"
+    path = "tpv105/tpv105_material.yaml"
+    [[example.files]]
+    size = 83
+    sha1 = "ef9c81afbfe9304f7df758e3152f431bfb37e14c"
+    path = "tpv105/tpv105_receivers.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv12_13"
+repo = "SeisSol/Examples"
+folder = "tpv12_13"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV12/13: normal fault with plasticity. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 304
+    sha1 = "213a181a8e3b4ba99445c86f50f7536bf902f29c"
+    path = "tpv12_13/generating_the_mesh.sh"
+    [[example.files]]
+    size = 3188
+    sha1 = "4279168ee4b9b0d1bbfd5ebe4aba90561a231593"
+    path = "tpv12_13/parameters.par"
+    [[example.files]]
+    size = 5801
+    sha1 = "a5538a2e800a588521be4edd700a875c422c414d"
+    path = "tpv12_13/tpv12_13_example.geo"
+    [[example.files]]
+    size = 803
+    sha1 = "1eb8f2aab59a420147ec780848930bcdf704d4ff"
+    path = "tpv12_13/tpv12_13_fault.yaml"
+    [[example.files]]
+    size = 229
+    sha1 = "ca0ee866c67bb1af078fd69be32eda9bdec6d490"
+    path = "tpv12_13/tpv12_13_faultreceivers.dat"
+    [[example.files]]
+    size = 791
+    sha1 = "77c517ff02759adec54a08d2cda9de933c3f31c5"
+    path = "tpv12_13/tpv12_13_initial_stress.yaml"
+    [[example.files]]
+    size = 296
+    sha1 = "a12c911caf4d00e81b01cf01d80b7c998be42098"
+    path = "tpv12_13/tpv12_13_material.yaml"
+    [[example.files]]
+    size = 279
+    sha1 = "3196af234de6f65d5a3f17ce0803d1de1a78c589"
+    path = "tpv12_13/tpv12_13_receivers.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv16"
+repo = "SeisSol/Examples"
+folder = "tpv16"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV16/17: random stress. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 212
+    sha1 = "cf905bc22d43a8380681570377955cb29dce3e8d"
+    path = "tpv16/README.md"
+    [[example.files]]
+    size = 461
+    sha1 = "e641debd7386fa5012354bc9c52f07e0e872fcd3"
+    path = "tpv16/generating_the_mesh.sh"
+    [[example.files]]
+    size = 3058
+    sha1 = "c7021791c94a62ed5c99ce40fa85f453bb6e7f75"
+    path = "tpv16/parameters.par"
+    [[example.files]]
+    size = 973
+    sha1 = "3b4db9fa950d4174be9edf7fe4a2234f52978780"
+    path = "tpv16/tpv16_fault.yaml"
+    [[example.files]]
+    size = 177
+    sha1 = "014965817a12c064612517a53d9bd18f2b40df5e"
+    path = "tpv16/tpv16_faultreceivers.dat"
+    [[example.files]]
+    size = 3945
+    sha1 = "3fb9b77748328171b69c14ceff2cf2c3499e72ad"
+    path = "tpv16/tpv16_half.geo"
+    [[example.files]]
+    size = 109
+    sha1 = "e8c9bdfaa55d9b404f24e9a46f48b1916d6a279f"
+    path = "tpv16/tpv16_material.yaml"
+    [[example.files]]
+    size = 311
+    sha1 = "bf0fb3d68b268d8646dcea85002c8aa1bb328204"
+    path = "tpv16/tpv16_receivers.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv24"
+repo = "SeisSol/Examples"
+folder = "tpv24"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV24: branching fault. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 298
+    sha1 = "d9814cfafba759f8db0a50f23fe73816504ea396"
+    path = "tpv24/generating_the_mesh.sh"
+    [[example.files]]
+    size = 3146
+    sha1 = "58bad9252b086889ac9f0c0854369ee1d3adfd88"
+    path = "tpv24/parameters.par"
+    [[example.files]]
+    size = 5479
+    sha1 = "cf7121ee95242b2701104a7a19052f44f67ccdee"
+    path = "tpv24/tpv24_400m.geo"
+    [[example.files]]
+    size = 1633
+    sha1 = "b61c1453ed0b9690ac36edb4d36d6bba2f70a250"
+    path = "tpv24/tpv24_fault.yaml"
+    [[example.files]]
+    size = 255
+    sha1 = "b0943f6223544459b9189d4cb244fe3f07cfe062"
+    path = "tpv24/tpv24_faultreceivers.dat"
+    [[example.files]]
+    size = 78
+    sha1 = "874d5a4ad59ed537b641af01bbbbc6daaccf6aee"
+    path = "tpv24/tpv24_material.yaml"
+    [[example.files]]
+    size = 95
+    sha1 = "8fbe7a8364e7082fb213c61d5246b795d35286a3"
+    path = "tpv24/tpv24_receivers.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv29"
+repo = "SeisSol/Examples"
+folder = "tpv29"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV29/30: rough fault. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 584
+    sha1 = "f70522e7e78a3344ab563ab228f5eece99510bcf"
+    path = "tpv29/generate_mytopo_tpv29.py"
+    [[example.files]]
+    size = 436
+    sha1 = "2ba0af6770bb55c9e4017d03278e76ca5afa5155"
+    path = "tpv29/generating_the_mesh.sh"
+    [[example.files]]
+    size = 21756
+    sha1 = "f7473e4556c85d088ea7de3ed5020bfd97d895c1"
+    path = "tpv29/gmsh_plane2topo.f90"
+    [[example.files]]
+    size = 498
+    sha1 = "458025580962b03ca31d7c256ad0aa8d1bff66b3"
+    path = "tpv29/interpol_topo.in"
+    [[example.files]]
+    size = 3054
+    sha1 = "e3197006ac82e70f688282696510fef774c2d253"
+    path = "tpv29/parameters.par"
+    [[example.files]]
+    size = 824
+    sha1 = "09ba52819a34b8e41c62cb0bda4768e2efe22a18"
+    path = "tpv29/tpv29-receivers.dat"
+    [[example.files]]
+    size = 3539
+    sha1 = "318af1558af520f90942ef2a1279f7a81dea8996"
+    path = "tpv29/tpv29.geo"
+    [[example.files]]
+    size = 1364
+    sha1 = "83f5c352f4c3d17ec5908169f4c28c3df0dd10b4"
+    path = "tpv29/tpv29_fault.yaml"
+    [[example.files]]
+    size = 1512
+    sha1 = "c4d9a78294b81443428a2da7d6957503bb235f52"
+    path = "tpv29/tpv29_faultreceivers.dat"
+    [[example.files]]
+    size = 86
+    sha1 = "bb39a62a7953fe0d6c866f4e2ad5346b429d7b31"
+    path = "tpv29/tpv29_material.yaml"
+    [[example.files]]
+    size = 1851
+    sha1 = "357a0e57a4b340687d2faa0ef877b7b5e47255b8"
+    path = "tpv29/tpv29_step2.geo"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv33"
+repo = "SeisSol/Examples"
+folder = "tpv33"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV33: fault with a weak zone. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 461
+    sha1 = "e1a9cc561d1a7c5c7664ac1bfdf795f7889e30c3"
+    path = "tpv33/generating_the_mesh.sh"
+    [[example.files]]
+    size = 2992
+    sha1 = "dec2c0a0e007a1470f315ddaceeafd67bbc5aa8c"
+    path = "tpv33/parameters.par"
+    [[example.files]]
+    size = 1273
+    sha1 = "aad8fdea3b926775542325d61d94c33bd750429a"
+    path = "tpv33/tpv33_fault.yaml"
+    [[example.files]]
+    size = 796
+    sha1 = "0e865828e8d4796a65e25baa64163499ba6ca1dd"
+    path = "tpv33/tpv33_faultreceivers.dat"
+    [[example.files]]
+    size = 6079
+    sha1 = "000e689d4aa7ec6163789d2af0638bbbaecd3047"
+    path = "tpv33/tpv33_half.geo"
+    [[example.files]]
+    size = 392
+    sha1 = "630db3b3b8d3ce8dc1b9beeed7a28bc964d2c334"
+    path = "tpv33/tpv33_material.yaml"
+    [[example.files]]
+    size = 2512
+    sha1 = "47cb2daa82d76ecc20680269cc14d4516a0c0960"
+    path = "tpv33/tpv33_receivers.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv34"
+repo = "SeisSol/Examples"
+folder = "tpv34"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV34: rupture in a 3D velocity model. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 3452
+    sha1 = "8b28f384cc63abfc02e6425bbea8e0c579dd8b2b"
+    path = "tpv34/generate_ASAGI_file.sh"
+    [[example.files]]
+    size = 461
+    sha1 = "9b466ba38f5f95c8d9b32488ff93d1bcdc2d22a9"
+    path = "tpv34/generate_mesh_file.sh"
+    [[example.files]]
+    size = 2816
+    sha1 = "ef0983e3897742689b9974f99d49bb518b7e5287"
+    path = "tpv34/parameters.par"
+    [[example.files]]
+    size = 1403
+    sha1 = "ea1acb98d58bf21aa3e2d499e9acc70b96a427c4"
+    path = "tpv34/tpv34_fault.yaml"
+    [[example.files]]
+    size = 672
+    sha1 = "ed8cae89c0454e670c66a5e2905197c437b3ec97"
+    path = "tpv34/tpv34_faultreceivers.dat"
+    [[example.files]]
+    size = 2623
+    sha1 = "358ab2f2c4f4df238b4c047079e61f0abb2c8efb"
+    path = "tpv34/tpv34_half.geo"
+    [[example.files]]
+    size = 547
+    sha1 = "40b47e09207a9fcc8910eae094c5fd0c441d060f"
+    path = "tpv34/tpv34_material.yaml"
+    [[example.files]]
+    size = 1232
+    sha1 = "c49cfc84184ddd7c4b7d065c49a064e71a30d119"
+    path = "tpv34/tpv34_receivers.dat"
+    [[example.files]]
+    size = 3471
+    sha1 = "faacde919dc7298ce8fce02843f616e0762aa356"
+    path = "tpv34/write_cvmh_input.py"
+    [[example.files]]
+    size = 6349
+    sha1 = "f406f9ddd05c70c85874ee8901f0bf88d7dc5df1"
+    path = "tpv34/write_cvmh_output.py"
+[[example]]
+parfile = "parameters_tpv36.par"
+name = "examples/tpv36_37"
+repo = "SeisSol/Examples"
+folder = "tpv36_37"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV36/37: rupture in a 3D velocity model. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 1016
+    sha1 = "2da929d2744f59563c21126e254a4152bf46997f"
+    path = "tpv36_37/README.md"
+    [[example.files]]
+    size = 1143
+    sha1 = "8c42454a127adf42d53fc9d5449d46f649e05358"
+    path = "tpv36_37/fault_tpv36.yaml"
+    [[example.files]]
+    size = 1144
+    sha1 = "bed2056857feda45feedc4c7d2282dbcb7a9990f"
+    path = "tpv36_37/fault_tpv37.yaml"
+    [[example.files]]
+    size = 309
+    sha1 = "c41ddcd1e24c5a0a9bb1206d8dc4a07e7a5f7d95"
+    path = "tpv36_37/generating_the_mesh.sh"
+    [[example.files]]
+    size = 113
+    sha1 = "4e23ec1d564249f144f77fb2b093ad11286d2444"
+    path = "tpv36_37/material.yaml"
+    [[example.files]]
+    size = 408
+    sha1 = "779fb7ab6b069b0817909b0d35db6f88e719421d"
+    path = "tpv36_37/offfault_receivers.dat"
+    [[example.files]]
+    size = 970
+    sha1 = "78557ab8afd007a69fea573f2251f0aeb62d25ac"
+    path = "tpv36_37/onfault_receivers.dat"
+    [[example.files]]
+    size = 3325
+    sha1 = "41e37eb93b73b8c324071d88cf77ffe4e315e19a"
+    path = "tpv36_37/parameters_tpv36.par"
+    [[example.files]]
+    size = 3325
+    sha1 = "d5af86a085cdc05abc3cc0ea5dca791298328660"
+    path = "tpv36_37/parameters_tpv37.par"
+    [[example.files]]
+    size = 88818
+    sha1 = "1fdbb652012bb0375f648f5e6e552cf254434e46"
+    path = "tpv36_37/receivers_off-fault.png"
+    [[example.files]]
+    size = 70748
+    sha1 = "eea88b517b8dc0dbbda46032d9490e48a3912127"
+    path = "tpv36_37/receivers_on-fault.png"
+    [[example.files]]
+    size = 5031
+    sha1 = "c902916beebb81b03b2711563f9c0ce83f68a736"
+    path = "tpv36_37/tpv36_37_mesh_refined.geo"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv5"
+repo = "SeisSol/Examples"
+folder = "tpv5"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV5: planar fault, heterogeneous initial stress (mesh must be generated). Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 1005
+    sha1 = "22adb2bdceb0e91562a56128b6ae824a91e19fc3"
+    path = "tpv5/fault.yaml"
+    [[example.files]]
+    size = 468
+    sha1 = "5e9f16e05dffe48bdd78760266ff25f38c90ce4b"
+    path = "tpv5/generating_mirror_mesh.sh"
+    [[example.files]]
+    size = 308
+    sha1 = "6bb85c0aec6bea3627a7daf5dc037265fb1d9828"
+    path = "tpv5/generating_the_mesh.sh"
+    [[example.files]]
+    size = 3260
+    sha1 = "ec97bd0e3907df8e7ba34800935f4c7bc33f98c5"
+    path = "tpv5/parameters.par"
+    [[example.files]]
+    size = 4522
+    sha1 = "e8c619e69a8e815bc50a18563de4dd1957121746"
+    path = "tpv5/tpv5_f200_halfdom.geo"
+    [[example.files]]
+    size = 5707
+    sha1 = "872f6d13e695d5afce743b2fa231af6d63bd9747"
+    path = "tpv5/tpv5_f200m.geo"
+    [[example.files]]
+    size = 207
+    sha1 = "46645178a2d3f1aedca67d67fcf8e42795df9af8"
+    path = "tpv5/tpv5_faultreceivers.dat"
+    [[example.files]]
+    size = 78
+    sha1 = "874d5a4ad59ed537b641af01bbbbc6daaccf6aee"
+    path = "tpv5/tpv5_material.yaml"
+    [[example.files]]
+    size = 132
+    sha1 = "a7261dfa196b6c6e595261e75e01a4f02f072f3d"
+    path = "tpv5/tpv5_receivers.dat"
+[[example]]
+parfile = "parameters.par"
+name = "examples/tpv6_7"
+repo = "SeisSol/Examples"
+folder = "tpv6_7"
+commit = "9eeb520f8cc3ab3a9d9ac8d3e188ae628eec1536"
+status = "needs-mesh"
+description = "SCEC TPV6/7: rupture with heterogeneous stress. Only the setup files are provided: generate the mesh with gmsh and PUMGen (see generating_the_mesh.sh)"
+
+    [[example.files]]
+    size = 727
+    sha1 = "ffdded9d8dd137f617abf18a98fe488ed91221c9"
+    path = "tpv6_7/fault.yaml"
+    [[example.files]]
+    size = 31
+    sha1 = "1cb5d183f709935f72822c4979e2409d4032bb24"
+    path = "tpv6_7/mesh_file"
+    [[example.files]]
+    size = 3104
+    sha1 = "3a88aefbde956b0e3a0e18f0a51252e4071ca366"
+    path = "tpv6_7/parameters.par"
+    [[example.files]]
+    size = 161
+    sha1 = "91e580174787574d93c50469f9dc10f3d14367e5"
+    path = "tpv6_7/tpv6_faultreceivers.dat"
+    [[example.files]]
+    size = 478
+    sha1 = "1f986d33d6f2e69a6839c218ea77c4bc29153bfe"
+    path = "tpv6_7/tpv6_material.yaml"
+    [[example.files]]
+    size = 83
+    sha1 = "ef9c81afbfe9304f7df758e3152f431bfb37e14c"
+    path = "tpv6_7/tpv6_receivers.dat"

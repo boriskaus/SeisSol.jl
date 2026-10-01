@@ -75,8 +75,29 @@ end
     @test occursin("Dumbser", String(take!(io)))
 end
 
+@testset "example manifest" begin
+    @test length(examples()) >= 20
+    for name in examples()
+        ex = SeisSol.EXAMPLES[name]
+        @test ex["status"] in keys(SeisSol.STATUS)
+        @test all(f -> length(f["sha1"]) == 40 && f["size"] >= 0, ex["files"])
+        # the main parameter file is part of the example
+        isempty(ex["parfile"]) || @test any(f -> basename(f["path"]) == ex["parfile"], ex["files"])
+    end
+    io = IOBuffer()
+    example_info("kaikoura"; io)
+    @test occursin("needs-asagi", String(take!(io)))
+
+    # a small example from the SeisSol examples repository (setup files only, no mesh)
+    dir = mktempdir()
+    par = @test_logs (:warn, r"mesh is not included") match_mode = :any download_example("examples/tpv5"; dir)
+    @test isfile(par) && basename(par) == "parameters.par"
+    @test get_parameter(par, "MeshFile") == "tpv5_f200m.puml.h5"
+    @test !isdir(joinpath(dir, "figures"))
+end
+
 @testset "TPV13 dynamic rupture example" begin
-    @test examples() == ["tpv13"]
+    @test "tpv13" in examples(status = "runs")
     @test_throws ArgumentError download_example("nonexistent")
 
     function run_tpv13(nprocs)
