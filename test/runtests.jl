@@ -2,8 +2,7 @@ using Test
 using SeisSol
 using SeisSol_jll
 
-# The tests that start the solver are skipped wherever there is no usable SeisSol binary; the
-# Windows binary is blocked (see the README) unless SEISSOL_ALLOW_WINDOWS=true is set.
+# The tests that start the solver are skipped wherever there is no SeisSol binary.
 const RUN_SOLVER = SeisSol.solver_usable()
 
 # The first testset mirrors the checks in SeisSol's own CI workflow
@@ -40,24 +39,17 @@ end
     RUN_SOLVER && @test isfile(seissol_executable())
     if RUN_SOLVER
         dir = export_prefix(joinpath(mktempdir(), "prefix"))
-        @test isfile(joinpath(dir, "bin", "seissol")) && isfile(joinpath(dir, "bin", "mpiexec"))
+        ext = Sys.iswindows() ? ".exe" : ""
+        @test isfile(joinpath(dir, "bin", "seissol" * ext)) && isfile(joinpath(dir, "bin", "mpiexec" * ext))
         # run the exported proxy with an EMPTY environment: everything must be found via RUNPATH
         out = IOBuffer()
-        cmd = setenv(`$(joinpath(dir, "bin", "seissol_proxy")) 50 1 all`, Dict{String,String}())
+        # nothing from the Julia environment is available: only the exported folder
+        cleanenv = Sys.iswindows() ? Dict("SystemRoot" => ENV["SystemRoot"], "PATH" => joinpath(ENV["SystemRoot"], "System32")) : Dict{String,String}()
+        cmd = setenv(`$(joinpath(dir, "bin", Sys.iswindows() ? "seissol_proxy.exe" : "seissol_proxy")) 50 1 all`, cleanenv)
         @test success(pipeline(cmd; stdout = out, stderr = devnull))
         @test occursin("PERFORMANCE SUMMARY", String(take!(out)))
     else
         @test_skip false
-    end
-end
-
-@testset "binary availability" begin
-    @test SeisSol.solver_usable() isa Bool
-    if Sys.iswindows() && !SeisSol.solver_usable()
-        # clear message instead of a crash
-        @test_throws ErrorException run_proxy()
-        err = try run_proxy() catch e; sprint(showerror, e) end
-        @test occursin("WSL2", err)
     end
 end
 
@@ -146,7 +138,7 @@ end
 
 @testset "ASAGI example (Sulawesi: 3D velocity model read from NetCDF)" begin
     @test SeisSol.EXAMPLES["sulawesi"]["status"] == "runs"
-    if RUN_SOLVER
+    if RUN_SOLVER && !Sys.iswindows()    # ASAGI is not part of the Windows binary
         par = download_example("sulawesi"; dir = mktempdir())
         dir = dirname(par)
         set_parameters!(par; EndTime = 0.05)

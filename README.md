@@ -3,7 +3,7 @@
 [![CI](https://github.com/boriskaus/SeisSol.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/boriskaus/SeisSol.jl/actions/workflows/CI.yml)
 
 A small Julia wrapper that makes it easy to run [**SeisSol**](https://seissol.org) examples on
-**Linux and macOS** (Windows: see the limitations), without compiling anything and without Docker or a cluster.
+**Linux, macOS and Windows**, without compiling anything and without Docker or a cluster.
 It downloads a precompiled SeisSol binary ([`SeisSol_jll`](https://github.com/boriskaus/SeisSol_jll.jl)),
 starts it with MPI + OpenMP, and offers a few helpers to edit parameter files and read the output.
 
@@ -23,7 +23,7 @@ large supercomputers (MPI + OpenMP, GPUs).
 
 ## Limitations — please read
 
-- **Windows:** the Windows build of SeisSol currently **crashes at runtime**, so `SeisSol.jl` refuses to run it and tells you to use **WSL2** instead. In WSL2 (Windows Subsystem for Linux, `wsl --install`, then e.g. Ubuntu) install Julia and SeisSol.jl exactly as described below; the Linux binary is used and everything works, including `export_prefix` and the terminal usage. The rest of the wrapper (parameter files, example download, output reading) also works natively on Windows. `SEISSOL_ALLOW_WINDOWS=true` lifts the block.
+- **Windows:** a native Windows build (with Microsoft MPI, runs in parallel) is included, but it is the plainest of the builds: generic kernels without the libxsmm code generator (roughly 4-5 times slower than the Linux/macOS builds) and **no ASAGI** (so the Kaikoura and Sulawesi examples do not run). For the best speed on a Windows computer use WSL2 (Ubuntu inside Windows): there the Linux binary is used.
 
 The binary behind this package is a **generic, portable build**, chosen so that it runs everywhere:
 
@@ -74,7 +74,7 @@ Pkg.activate("seissol"; shared=true)      # ~/.julia/environments/seissol
 
 and then start Julia with `julia --project=@seissol` (REPL) or `julia --project=@seissol -e '...'`.
 
-The binary is built for MPICH (Linux, macOS), which is the default of MPI.jl. If you changed `MPIPreferences` to another MPI, switch back with
+The binary is built for MPICH (Linux, macOS) and Microsoft MPI (Windows), the defaults of MPI.jl. If you changed `MPIPreferences` to another MPI, switch back with
 `using MPIPreferences; MPIPreferences.use_jll_binary("MPICH_jll")` and restart Julia.
 
 ## Usage
@@ -116,7 +116,7 @@ executable that you can use from a shell, a script or a job system.
 
 ### Quick start: copy and paste
 
-Works in a Linux or macOS terminal (on Windows, use a WSL2 Ubuntu terminal, see above).
+Works in a Linux or macOS terminal, or in a WSL2 Ubuntu terminal on Windows. For native Windows (PowerShell) see [below](#quick-start-windows-powershell).
 
 **A. Install (once, about 2 minutes).** You need Julia ≥ 1.11; if `julia --version` does not work,
 install it first (see [julialang.org/install](https://julialang.org/install)) and open a new terminal:
@@ -129,6 +129,7 @@ Then paste the following. It installs SeisSol.jl and the SeisSol binaries into a
 Julia environment called `@seissol` (this does not interfere with other Julia work) and creates
 the standalone folder `~/seissol`:
 
+<!-- ci:bash-install -->
 ```sh
 julia --project=@seissol -e '
 using Pkg
@@ -148,6 +149,7 @@ To update later: `rm -rf ~/seissol`, run the same block again.
 **B. Run an example** (the SCEC TPV13 earthquake-rupture benchmark, a few seconds of simulated time on
 4 MPI processes, about 30 s on a laptop):
 
+<!-- ci:bash-run -->
 ```sh
 mkdir -p ~/seissol_examples && cd ~/seissol_examples
 julia --project=@seissol -e 'using SeisSol; download_example("tpv13")'      # creates the folder tpv13
@@ -162,7 +164,55 @@ The results are in `tpv13/outputs/`: open `tpv13-fault.xdmf` (slip and tractions
 [ParaView](https://www.paraview.org); `tpv13-energy.csv` contains the energy and seismic moment
 as a function of time. Other examples: `julia --project=@seissol -e 'using SeisSol; println(examples())'`.
 
-### The same, step by step
+### Quick start: Windows (PowerShell)
+
+Open **PowerShell** (Start menu, "PowerShell"). If `julia --version` does not work, install Julia first
+(`winget install --name Julia --id 9NJNWW8PVKMN -e -s msstore`, see
+[julialang.org/install](https://julialang.org/install)) and open a new PowerShell window.
+
+**A. Install (once, about 3 minutes).** The Julia code is saved to a file first, which avoids
+quoting problems in PowerShell:
+
+<!-- ci:ps-install -->
+```powershell
+@'
+using Pkg
+Pkg.add([PackageSpec(url="https://github.com/boriskaus/ASAGI_jll.jl"),
+         PackageSpec(url="https://github.com/boriskaus/easi_jll.jl"),
+         PackageSpec(url="https://github.com/boriskaus/SeisSol_jll.jl"),
+         PackageSpec(url="https://github.com/boriskaus/SeisSol.jl")])
+using SeisSol
+export_prefix(joinpath(homedir(), "seissol"))
+'@ | Set-Content -Encoding ascii install_seissol.jl
+julia --project=@seissol install_seissol.jl
+```
+
+This creates the folder `%USERPROFILE%\seissol` with `bin\seissol.exe`, `bin\mpiexec.exe` (Microsoft MPI)
+and all DLLs. To update later: delete that folder and run the block again.
+
+**B. Run an example** (TPV13 earthquake-rupture benchmark, 4 MPI processes; the Windows build is
+slower than Linux, expect a few minutes):
+
+<!-- ci:ps-run -->
+```powershell
+mkdir $HOME\seissol_examples -Force; cd $HOME\seissol_examples
+@'
+using SeisSol
+download_example("tpv13")
+set_parameters!(joinpath("tpv13", "parameters.par"); EndTime = 2.0)
+'@ | Set-Content -Encoding ascii get_example.jl
+julia --project=@seissol get_example.jl
+cd tpv13
+$env:SEISSOL_COMMTHREAD = "0"; $env:OMP_NUM_THREADS = "1"
+& "$HOME\seissol\bin\mpiexec.exe" -n 4 "$HOME\seissol\bin\seissol.exe" parameters.par
+```
+
+The results are in `tpv13\outputs\` (open the `.xdmf` files in [ParaView](https://www.paraview.org)).
+Windows may ask whether `mpiexec`/`seissol` may use the network: allow it for private networks
+(MPI processes talk to each other over the local network stack). Use `\` or `/` in paths as usual;
+a path with spaces must be quoted.
+
+### The same, step by step (Linux/macOS)
 
 **1. Install SeisSol into a folder** (one time; this is what the quick start does. Use the same
 environment in which you installed SeisSol.jl: plain `julia` for the default environment, otherwise

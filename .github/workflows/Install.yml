@@ -55,3 +55,54 @@ jobs:
         continue-on-error: true
         shell: bash
         run: julia --color=yes ci/pkg_test.jl
+
+  # Runs the copy-and-paste blocks of the README verbatim, in a clean environment.
+  readme-quickstart:
+    name: README quick start - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macOS-15-intel
+          - macOS-latest
+          - windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: '1'
+      - name: Extract the README blocks
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            julia ci/readme_block.jl ps-install > "$RUNNER_TEMP/install.ps1"
+            julia ci/readme_block.jl ps-run > "$RUNNER_TEMP/run.ps1"
+          else
+            julia ci/readme_block.jl bash-install > "$RUNNER_TEMP/install.sh"
+            julia ci/readme_block.jl bash-run > "$RUNNER_TEMP/run.sh"
+          fi
+      - name: A. Install (README block)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: bash "$RUNNER_TEMP/install.sh"
+      - name: B. Run the example (README block)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: bash "$RUNNER_TEMP/run.sh"
+      - name: A. Install (README block, PowerShell)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: cd $env:RUNNER_TEMP; ./install.ps1
+      - name: B. Run the example (README block, PowerShell)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./run.ps1
+        working-directory: ${{ runner.temp }}
+      - name: Check the result
+        shell: bash
+        run: |
+          f="$HOME/seissol_examples/tpv13/outputs/tpv13-energy.csv"
+          test -s "$f" && tail -n 3 "$f"
+          grep -q seismic_moment "$f"

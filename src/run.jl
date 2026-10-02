@@ -1,25 +1,16 @@
 """
     solver_usable() -> Bool
 
-`true` if a SeisSol binary exists for this platform and can be used. The Windows binary currently
-crashes at runtime and is therefore blocked unless the environment variable
-`SEISSOL_ALLOW_WINDOWS=true` is set.
+`true` if a SeisSol binary exists for this platform (Linux, macOS and Windows with the default MPI).
 """
-solver_usable() = SeisSol_jll.is_available() &&
-                  (!Sys.iswindows() || get(ENV, "SEISSOL_ALLOW_WINDOWS", "false") == "true")
+solver_usable() = SeisSol_jll.is_available()
 
 function check_available()
-    if Sys.iswindows() && !solver_usable()
-        error("""The Windows build of SeisSol currently crashes at runtime and is disabled.
-              Please run SeisSol.jl inside WSL2 (Windows Subsystem for Linux, e.g. Ubuntu), where the
-              Linux binary is used: https://learn.microsoft.com/windows/wsl/install
-              (set SEISSOL_ALLOW_WINDOWS=true to try the Windows binary anyway).""")
-    end
-    if !SeisSol_jll.is_available()
+    if !solver_usable()
         error("""SeisSol_jll is not available for this platform/MPI combination.
-              The binary is built for Linux and macOS with MPICH (there is no Windows version).
+              The binary is built for Linux and macOS with MPICH and for Windows with Microsoft MPI.
               If you changed the MPI implementation in MPIPreferences, switch back with
-                  using MPIPreferences; MPIPreferences.use_jll_binary("MPICH_jll")
+                  using MPIPreferences; MPIPreferences.use_jll_binary("MPICH_jll")   # Windows: "MicrosoftMPI_jll"
               and restart Julia.""")
     end
     return nothing

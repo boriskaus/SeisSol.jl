@@ -13,14 +13,6 @@ Pkg.add(url = "https://github.com/$repo", rev = rev)
 
 using SeisSol
 
-if Sys.iswindows()
-    # there is no usable Windows binary: a clear message pointing to WSL2 is expected
-    msg = try run_proxy(); "" catch e; sprint(showerror, e) end
-    occursin("WSL2", msg) || error("expected the WSL2 hint on Windows, got: $msg")
-    println("Windows: blocked with a clear message, as intended")
-    exit(0)
-end
-
 println("== run_proxy()")
 run_proxy(; cells = 200, timesteps = 1)
 
@@ -34,9 +26,16 @@ isfinite(M0) && M0 > 0 || error("bad seismic moment")
 
 println("== export_prefix and a run from a shell without Julia")
 prefix = export_prefix(joinpath(mktempdir(), "seissol"))
-bin(name) = joinpath(prefix, "bin", name)
+ext = Sys.iswindows() ? ".exe" : ""
+bin(name) = joinpath(prefix, "bin", name * ext)
 # nothing from the Julia environment is available: only the exported folder
-cleanenv = Dict("HOME" => homedir(), "PATH" => "/usr/bin:/bin", "SEISSOL_COMMTHREAD" => "0", "OMP_NUM_THREADS" => "1")
+cleanenv = Dict("SEISSOL_COMMTHREAD" => "0", "OMP_NUM_THREADS" => "1")
+if Sys.iswindows()
+    cleanenv["SystemRoot"] = ENV["SystemRoot"]
+    cleanenv["PATH"] = joinpath(ENV["SystemRoot"], "System32")
+else
+    cleanenv["HOME"] = homedir(); cleanenv["PATH"] = "/usr/bin:/bin"
+end
 run(setenv(`$(bin("seissol_proxy")) 100 1 all`, cleanenv))
 rm(joinpath(dirname(par), "outputs"); recursive = true)   # SeisSol creates it again
 run(setenv(`$(bin("mpiexec")) -n 2 $(bin("seissol")) parameters.par`, cleanenv; dir = dirname(par)))
