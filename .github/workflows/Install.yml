@@ -106,3 +106,10 @@ jobs:
           f="$HOME/seissol_examples/tpv13/outputs/tpv13-energy.csv"
           test -s "$f" && tail -n 3 "$f"
           grep -q seismic_moment "$f"
+      - name: Keep the simulation output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tpv13-outputs-${{ matrix.os }}
+          path: ~/seissol_examples/tpv13/outputs
+          retention-days: 5
