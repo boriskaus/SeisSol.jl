@@ -43,7 +43,8 @@ SeisSol also needs a **mesh** in its PUML (`.puml.h5`) format, generated with
 ## Installation
 
 Julia ≥ 1.11 is required. The binary packages are not yet in the General registry, so they are
-installed from GitHub:
+installed from GitHub. Start Julia **without** `--project` (so that the default environment is
+active; the prompt of the package manager, `]`, shows `(@v1.12) pkg>`) and run:
 
 ```julia
 using Pkg
@@ -52,6 +53,26 @@ Pkg.add(url="https://github.com/boriskaus/easi_jll.jl")
 Pkg.add(url="https://github.com/boriskaus/SeisSol_jll.jl")
 Pkg.add(url="https://github.com/boriskaus/SeisSol.jl")
 ```
+
+(Add the four packages in this order, or all in one `Pkg.add([PackageSpec(url=...), ...])`
+call; `SeisSol_jll` cannot be installed on its own because its dependencies are not registered.)
+
+**Where is it installed?** Packages live in an *environment*. The commands above install into
+the default environment, which is what a plain `julia` and `julia -e '...'` use. If you install
+into a project instead (e.g. you started `julia --project=.` in a course folder, or ran
+`] activate .` first), then `using SeisSol` only works in that project, and the terminal commands
+below must be started with the same project, e.g. `julia --project=/path/to/folder -e '...'`.
+`julia -e 'using Pkg; Pkg.status()'` shows what the default environment contains, and
+`julia --project=. -e 'using Pkg; Pkg.status()'` what the project in the current folder contains.
+A clean way to keep SeisSol separate is a *shared* environment:
+
+```julia
+using Pkg
+Pkg.activate("seissol"; shared=true)      # ~/.julia/environments/seissol
+# ... the four Pkg.add lines from above ...
+```
+
+and then start Julia with `julia --project=@seissol` (REPL) or `julia --project=@seissol -e '...'`.
 
 The binary is built for MPICH (Linux, macOS), which is the default of MPI.jl. If you changed `MPIPreferences` to another MPI, switch back with
 `using MPIPreferences; MPIPreferences.use_jll_binary("MPICH_jll")` and restart Julia.
@@ -94,7 +115,9 @@ Visualise the XDMF/HDF5 output (fault and free-surface fields) with [ParaView](h
 Julia is only needed once, to download SeisSol. After that the solver is an ordinary
 executable that you can use from a shell, a script or a job system.
 
-**1. Install SeisSol into a folder** (one time, from Julia or directly from the shell):
+**1. Install SeisSol into a folder** (one time, from Julia or directly from the shell; use the same
+environment in which you installed SeisSol.jl: plain `julia` for the default environment, otherwise
+`julia --project=<project or @seissol> ...`, see [Installation](#installation)):
 
 ```sh
 julia -e 'using SeisSol; export_prefix(expanduser("~/seissol"))'
