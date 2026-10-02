@@ -65,5 +65,10 @@ function export_prefix(dir::AbstractString; link::Bool = true)
             end
         end
     end
+    exe = joinpath(dir, "bin", "seissol")
+    @info """SeisSol exported to $dir
+      solver:   $exe
+      launcher: $(joinpath(dir, "bin", "mpiexec"))   (MPICH, shipped; libraries in $lib)
+      run with: SEISSOL_COMMTHREAD=0 OMP_NUM_THREADS=1 $(joinpath(dir, "bin", "mpiexec")) -n 4 $exe parameters.par"""
     return dir
 end

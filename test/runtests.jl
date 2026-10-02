@@ -2,9 +2,10 @@ using Test
 using SeisSol
 using SeisSol_jll
 
-# There is no SeisSol binary for Windows (see the README); the tests that start the solver are
-# skipped wherever SeisSol_jll is not available.
-const RUN_SOLVER = SeisSol_jll.is_available()
+# The tests that start the solver are skipped wherever SeisSol_jll is not available. The Windows
+# binary is experimental (see the README) and only tested if SEISSOL_TEST_WINDOWS=true is set.
+const RUN_SOLVER = SeisSol_jll.is_available() &&
+                   (!Sys.iswindows() || get(ENV, "SEISSOL_TEST_WINDOWS", "false") == "true")
 
 # The first testset mirrors the checks in SeisSol's own CI workflow
 # (SeisSol/.github/workflows/build-seissol.yml): the solver must refuse to run without an

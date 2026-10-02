@@ -100,7 +100,7 @@ executable that you can use from a shell, a script or a job system.
 julia -e 'using SeisSol; export_prefix(expanduser("~/seissol"))'
 ```
 
-This creates a self-contained folder (the files are hard links into the Julia artifact
+`export_prefix` prints where everything is and how to run it. It creates a self-contained folder (the files are hard links into the Julia artifact
 folder where possible, so it takes little extra disk space):
 
 ```
@@ -123,30 +123,42 @@ best used through `export_prefix`.) Optionally add the folder to your path:
 ```
 
 **3. Get an example** (a mesh `*.puml.h5`, material/fault `*.yaml` files and a parameter file
-`*.par`). Either from Julia, `julia -e 'using SeisSol; println(download_example("tpv13"; dir="tpv13"))'`,
+`*.par`). With Julia (this also fixes the parameter file, see below):
+
+```sh
+julia -e 'using SeisSol; download_example("tpv13"; dir="tpv13")'
+cd tpv13
+```
+
 or with git and no Julia at all (all examples of the SeisSol training material):
 
 ```sh
 git clone --depth 1 https://github.com/SeisSol/Training.git
 cd Training/tpv13
-mkdir -p outputs                              # the parameter file writes its output here
+sed -i.bak '/RFileName/d' parameters.par     # this parameter file names a receiver file that is not in the repository
+```
+
+Then, in both cases, create the folder for the output (the parameter file writes to `outputs/`) and,
+for a quick test, shorten the simulation (the original runs 8 s):
+
+```sh
+mkdir -p outputs
+sed -i.bak 's/^EndTime.*/EndTime = 2.0/' parameters.par
 ```
 
 **4. Run it.** SeisSol reads the parameter file given as its only argument; relative file names
 inside it are relative to the *current directory*, so start it from the example folder:
 
 ```sh
-cd Training/tpv13
 export SEISSOL_COMMTHREAD=0      # no dedicated MPI thread (see below)
 export OMP_NUM_THREADS=1         # OpenMP threads per MPI rank
 ~/seissol/bin/mpiexec -n 4 ~/seissol/bin/seissol parameters.par      # 4 MPI ranks
 ```
 
-Edit `EndTime` (and, if you like, `OutputFile`, `EnergyOutputInterval`, ...) in the parameter
-file first if you only want a short test run. A single rank also works without `mpiexec`:
-`~/seissol/bin/seissol parameters.par`. Results appear where `OutputFile` points to
-(`outputs/tpv13-*`): XDMF/HDF5 files for [ParaView](https://www.paraview.org) and the
-`*-energy.csv` file with the energy and seismic moment.
+A single rank also works without `mpiexec`: `~/seissol/bin/seissol parameters.par`. Results appear
+where `OutputFile` points to (`outputs/tpv13-*`): XDMF/HDF5 files for
+[ParaView](https://www.paraview.org) and the `*-energy.csv` file with the energy and seismic moment.
+Other parameters you may want to change are `OutputFile`, `EnergyOutputInterval` and the output masks.
 
 **Settings that matter**
 
