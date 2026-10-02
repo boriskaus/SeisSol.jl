@@ -86,7 +86,6 @@ run_proxy()                        # kernel benchmark without input files: check
 
 par = download_example("tpv13")    # SCEC TPV13 benchmark from the SeisSol training material -> creates ./tpv13
 set_parameters!(par; EndTime = 2.0)
-mkpath(joinpath(dirname(par), "outputs"))
 run_seissol(par; nprocs = 4)             # 4 MPI ranks, 1 OpenMP thread each (default)
 
 energy = read_energy(joinpath(dirname(par), "outputs", "tpv13-energy.csv"))
@@ -161,11 +160,9 @@ cd Training/tpv13
 sed -i.bak '/RFileName/d' parameters.par     # this parameter file names a receiver file that is not in the repository
 ```
 
-Then, in both cases, create the folder for the output (the parameter file writes to `outputs/`) and,
-for a quick test, shorten the simulation (the original runs 8 s):
+Then, for a quick test, shorten the simulation (the original runs 8 s):
 
 ```sh
-mkdir -p outputs
 sed -i.bak 's/^EndTime.*/EndTime = 2.0/' parameters.par
 ```
 
@@ -181,7 +178,7 @@ export OMP_NUM_THREADS=1         # OpenMP threads per MPI rank
 A single rank also works without `mpiexec`: `~/seissol/bin/seissol parameters.par`. Results appear
 where `OutputFile` points to (`outputs/tpv13-*`): XDMF/HDF5 files for
 [ParaView](https://www.paraview.org) and the `*-energy.csv` file with the energy and seismic moment.
-Other parameters you may want to change are `OutputFile`, `EnergyOutputInterval` and the output masks.
+SeisSol creates the output folder (`outputs/`) itself, but only its last component: for an `OutputFile` like `results/run1/tpv13` the folder `results` must already exist. Other parameters you may want to change are `OutputFile`, `EnergyOutputInterval` and the output masks.
 
 **Settings that matter**
 

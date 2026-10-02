@@ -150,7 +150,6 @@ end
         par = download_example("sulawesi"; dir = mktempdir())
         dir = dirname(par)
         set_parameters!(par; EndTime = 0.05)
-        mkpath(joinpath(dir, "output"))
         @test run_seissol(par; nprocs = 2, logfile = joinpath(dir, "seissol.log"))
         @test occursin("SeisSol done", read(joinpath(dir, "seissol.log"), String))
     else
@@ -166,8 +165,7 @@ end
         par = download_example("tpv13"; dir = mktempdir())
         dir = dirname(par)
         set_parameters!(par; EndTime = 1.0)
-        mkpath(joinpath(dir, "outputs"))
-        @test run_seissol(par; nprocs, logfile = joinpath(dir, "seissol.log"))
+        @test run_seissol(par; nprocs, logfile = joinpath(dir, "seissol.log"))   # SeisSol creates outputs/ itself
         @test occursin("SeisSol done", read(joinpath(dir, "seissol.log"), String))
         energy = read_energy(joinpath(dir, "outputs", "tpv13-energy.csv"))
         M0 = energy["seismic_moment"]

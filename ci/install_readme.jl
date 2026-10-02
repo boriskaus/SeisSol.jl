@@ -27,7 +27,6 @@ run_proxy(; cells = 200, timesteps = 1)
 println("== download_example + run_seissol (2 MPI ranks)")
 par = download_example("tpv13"; dir = joinpath(mktempdir(), "tpv13"))
 set_parameters!(par; EndTime = 0.5)
-mkpath(joinpath(dirname(par), "outputs"))
 run_seissol(par; nprocs = 2, logfile = joinpath(dirname(par), "julia_run.log"))
 M0 = read_energy(joinpath(dirname(par), "outputs", "tpv13-energy.csv"))["seismic_moment"].value[end]
 println("seismic moment after 0.5 s: ", M0)
@@ -39,8 +38,7 @@ bin(name) = joinpath(prefix, "bin", name)
 # nothing from the Julia environment is available: only the exported folder
 cleanenv = Dict("HOME" => homedir(), "PATH" => "/usr/bin:/bin", "SEISSOL_COMMTHREAD" => "0", "OMP_NUM_THREADS" => "1")
 run(setenv(`$(bin("seissol_proxy")) 100 1 all`, cleanenv))
-rm(joinpath(dirname(par), "outputs"); recursive = true)
-mkpath(joinpath(dirname(par), "outputs"))
+rm(joinpath(dirname(par), "outputs"); recursive = true)   # SeisSol creates it again
 run(setenv(`$(bin("mpiexec")) -n 2 $(bin("seissol")) parameters.par`, cleanenv; dir = dirname(par)))
 M1 = read_energy(joinpath(dirname(par), "outputs", "tpv13-energy.csv"))["seismic_moment"].value[end]
 M1 ≈ M0 || error("shell run ($M1) differs from the Julia run ($M0)")
