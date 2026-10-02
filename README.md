@@ -23,7 +23,7 @@ large supercomputers (MPI + OpenMP, GPUs).
 
 ## Limitations — please read
 
-- **Windows:** a native Windows build (with Microsoft MPI, runs in parallel) is included, but it is the plainest of the builds: generic kernels without the libxsmm code generator (roughly 4-5 times slower than the Linux/macOS builds) and **no ASAGI** (so the Kaikoura and Sulawesi examples do not run). For the best speed on a Windows computer use WSL2 (Ubuntu inside Windows): there the Linux binary is used.
+- **Windows:** a native Windows build (with Microsoft MPI, runs in parallel) is included, but it is the plainest of the builds: generic kernels without the libxsmm code generator (roughly 4-5 times slower than the Linux/macOS builds); ASAGI is included, so the Kaikoura and Sulawesi examples run. For the best speed on a Windows computer use WSL2 (Ubuntu inside Windows): there the Linux binary is used.
 
 The binary behind this package is a **generic, portable build**, chosen so that it runs everywhere:
 
@@ -32,7 +32,9 @@ The binary behind this package is a **generic, portable build**, chosen so that 
   so that it runs on any CPU of the last decade but is **not tuned to your CPU like a build on an HPC system**;
 - fixed configuration: convergence order 4, elastic equations, double precision (no viscoelastic,
   poroelastic or anisotropic variants), 32-bit METIS indices, no GPU support;
-- ASAGI and NetCDF are enabled (e.g. Kaikoura, Sulawesi).
+- ASAGI and NetCDF are enabled (e.g. Kaikoura, Sulawesi). On Windows the NetCDF library has no parallel
+  support, so reading NetCDF meshes and writing NetCDF loop statistics are not available there
+  (reading ASAGI input files works).
 
 It is meant for learning, teaching, testing setups and small/medium problems on a laptop or
 workstation. For production runs, build SeisSol from source on your cluster as described in the

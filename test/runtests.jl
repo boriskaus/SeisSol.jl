@@ -138,7 +138,7 @@ end
 
 @testset "ASAGI example (Sulawesi: 3D velocity model read from NetCDF)" begin
     @test SeisSol.EXAMPLES["sulawesi"]["status"] == "runs"
-    if RUN_SOLVER && !Sys.iswindows()    # ASAGI is not part of the Windows binary
+    if RUN_SOLVER
         par = download_example("sulawesi"; dir = mktempdir())
         dir = dirname(par)
         set_parameters!(par; EndTime = 0.05)

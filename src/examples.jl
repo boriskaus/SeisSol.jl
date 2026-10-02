@@ -19,9 +19,6 @@ const FIXUPS = Dict{String,Function}(
     "tpv13" => par -> delete_parameter!(par, "RFileName"),
 )
 
-# Examples that read their 3D structure with ASAGI, which is not part of the Windows binary
-const ASAGI_EXAMPLES = ("kaikoura", "sulawesi")
-
 is_doc(path) = occursin(r"(^|/)figures/|\.(png|ipynb|pdf)$"i, path)
 
 """
@@ -94,8 +91,6 @@ run_seissol(par; nprocs = 2)
 function download_example(name::AbstractString; dir::AbstractString = last(split(name, '/')), docs::Bool = false)
     haskey(EXAMPLES, name) || throw(ArgumentError("unknown example \"$name\"; available: $(examples())"))
     ex = EXAMPLES[name]
-    Sys.iswindows() && name in ASAGI_EXAMPLES &&
-        @warn "Example \"$name\" needs ASAGI, which is not included in the Windows binary: the files are downloaded, but SeisSol will not run it on Windows (use WSL2)."
     ex["status"] == "runs" || @warn "Example \"$name\": $(STATUS[ex["status"]]) - $(ex["description"])"
     files = filter(f -> docs || !is_doc(f["path"]), ex["files"])
     dir = abspath(dir)
