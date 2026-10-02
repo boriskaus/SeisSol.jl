@@ -54,3 +54,5 @@ mpiexec = joinpath(MicrosoftMPI_jll.artifact_dir, "bin", "mpiexec.exe")
 plain("mpiexec -n 1", `$mpiexec -n 1 $exe parameters.par`; dir = d)
 println("energy file exists: ", isfile(joinpath(d, "outputs", "tpv13-energy.csv")))
 plain("mpiexec -n 2", `$mpiexec -n 2 $exe parameters.par`; dir = d)
+M = read_energy(joinpath(d, "outputs", "tpv13-energy.csv"))["seismic_moment"]
+println(">>> seismic moment (t = ", M.time[end], "): ", M.value[end])
