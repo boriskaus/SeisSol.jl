@@ -1,0 +1,57 @@
+name: Install workflow
+
+# Tests what a user does: install into a clean environment as described in the README, run
+# SeisSol from Julia and from a shell, install only the binary packages, and run `] test`.
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  install:
+    name: ${{ matrix.os }} - Julia ${{ matrix.version }} - ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - '1'
+          - '1.11'
+        os:
+          - ubuntu-latest
+          - macOS-15-intel
+          - windows-latest
+        arch:
+          - x64
+        include:
+          - os: macOS-latest
+            arch: aarch64
+            version: '1'
+          - os: macOS-latest
+            arch: aarch64
+            version: '1.11'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: ${{ matrix.version }}
+          arch: ${{ matrix.arch }}
+      - name: README installation, run_proxy, export_prefix, run from a shell
+        shell: bash
+        run: julia --color=yes ci/install_readme.jl
+      - name: Only the binary packages (SeisSol_jll without SeisSol.jl)
+        shell: bash
+        run: julia --color=yes ci/install_jll_only.jl
+      # Known to fail while the packages are not registered: Pkg's test sandbox cannot handle the
+      # [sources] that Pkg.add(url=...) writes (Julia >= 1.11). Not blocking until a registry exists.
+      - name: Pkg.test of the installed package
+        continue-on-error: true
+        shell: bash
+        run: julia --color=yes ci/pkg_test.jl
