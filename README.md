@@ -114,7 +114,57 @@ Visualise the XDMF/HDF5 output (fault and free-surface fields) with [ParaView](h
 Julia is only needed once, to download SeisSol. After that the solver is an ordinary
 executable that you can use from a shell, a script or a job system.
 
-**1. Install SeisSol into a folder** (one time, from Julia or directly from the shell; use the same
+### Quick start: copy and paste
+
+Works in a Linux or macOS terminal (on Windows, use a WSL2 Ubuntu terminal, see above).
+
+**A. Install (once, about 2 minutes).** You need Julia ≥ 1.11; if `julia --version` does not work,
+install it first (see [julialang.org/install](https://julialang.org/install)) and open a new terminal:
+
+```sh
+curl -fsSL https://install.julialang.org | sh      # only if you do not have Julia yet
+```
+
+Then paste the following. It installs SeisSol.jl and the SeisSol binaries into a separate
+Julia environment called `@seissol` (this does not interfere with other Julia work) and creates
+the standalone folder `~/seissol`:
+
+```sh
+julia --project=@seissol -e '
+using Pkg
+Pkg.add([PackageSpec(url="https://github.com/boriskaus/ASAGI_jll.jl"),
+         PackageSpec(url="https://github.com/boriskaus/easi_jll.jl"),
+         PackageSpec(url="https://github.com/boriskaus/SeisSol_jll.jl"),
+         PackageSpec(url="https://github.com/boriskaus/SeisSol.jl")])
+using SeisSol
+export_prefix(expanduser("~/seissol"))'
+```
+
+The last lines of the output tell you where everything is. To use `seissol` and `mpiexec`
+without typing the path, add the folder to your `PATH`
+(`echo 'export PATH=$HOME/seissol/bin:$PATH' >> ~/.bashrc`, on macOS `~/.zshrc`; open a new terminal).
+To update later: `rm -rf ~/seissol`, run the same block again.
+
+**B. Run an example** (the SCEC TPV13 earthquake-rupture benchmark, a few seconds of simulated time on
+4 MPI processes, about 30 s on a laptop):
+
+```sh
+mkdir -p ~/seissol_examples && cd ~/seissol_examples
+julia --project=@seissol -e 'using SeisSol; download_example("tpv13")'      # creates the folder tpv13
+cd tpv13
+sed -i.bak 's/^EndTime.*/EndTime = 2.0/' parameters.par                     # shorten the run (original: 8 s)
+export SEISSOL_COMMTHREAD=0 OMP_NUM_THREADS=1
+~/seissol/bin/mpiexec -n 4 ~/seissol/bin/seissol parameters.par
+```
+
+The results are in `tpv13/outputs/`: open `tpv13-fault.xdmf` (slip and tractions on the fault),
+`tpv13.xdmf` (3D wavefield) and `tpv13-free-surface-*.vtkhdf` (ground surface) in
+[ParaView](https://www.paraview.org); `tpv13-energy.csv` contains the energy and seismic moment
+as a function of time. Other examples: `julia --project=@seissol -e 'using SeisSol; println(examples())'`.
+
+### The same, step by step
+
+**1. Install SeisSol into a folder** (one time; this is what the quick start does. Use the same
 environment in which you installed SeisSol.jl: plain `julia` for the default environment, otherwise
 `julia --project=<project or @seissol> ...`, see [Installation](#installation)):
 
