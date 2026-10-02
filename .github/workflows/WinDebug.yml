@@ -1,0 +1,20 @@
+name: windows-debug
+on:
+  push:
+    branches: [windows-debug]
+jobs:
+  debug:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: '1'
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          path-type: inherit
+          install: mingw-w64-x86_64-gdb
+      - name: Debug run
+        shell: msys2 {0}
+        run: julia --color=no ci/windebug.jl
