@@ -57,6 +57,19 @@ function example_info(name::AbstractString; io::IO = stdout)
     return nothing
 end
 
+# Downloads fail now and then on slow or flaky networks (DNS timeouts, resets): try again.
+function download_retry(url, path; tries = 4)
+    for attempt in 1:tries
+        try
+            return Downloads.download(url, path)
+        catch err
+            attempt == tries && rethrow()
+            @warn "Download failed, retrying ($attempt/$(tries - 1))" url exception = (err, nothing)
+            sleep(2^attempt)
+        end
+    end
+end
+
 git_blob_sha1(data::AbstractVector{UInt8}) = bytes2hex(sha1(vcat(codeunits("blob $(length(data))\0"), data)))
 
 """
@@ -93,7 +106,7 @@ function download_example(name::AbstractString; dir::AbstractString = last(split
         local_path = joinpath(dir, split(f["path"], '/'; limit = 2)[2])
         mkpath(dirname(local_path))
         isfile(local_path) && filesize(local_path) == f["size"] && git_blob_sha1(read(local_path)) == f["sha1"] && continue
-        Downloads.download("$base/$(f["path"])", local_path)
+        download_retry("$base/$(f["path"])", local_path)
         data = read(local_path)
         (length(data) == f["size"] && git_blob_sha1(data) == f["sha1"]) ||
             error("checksum mismatch for $(f["path"]); delete $dir and try again")
