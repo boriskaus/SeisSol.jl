@@ -227,7 +227,7 @@ The test suite mirrors the checks of SeisSol's own CI (the solver must refuse to
 input, every kernel of the proxy mini-app must run) and adds parameter-file and output tests
 and a real dynamic-rupture run (TPV13, 1 and 2 MPI ranks, compared with a reference moment).
 GitHub Actions runs it on Linux, Intel and Apple-silicon macOS and Windows (where the solver tests are skipped).
-Locally: `julia --project=. test/runtests.jl` (`Pkg.test()` works once the JLLs are registered).
+Locally: `julia --project=. test/runtests.jl`. (`Test` is declared as the test dependency, but `Pkg.test()` itself currently fails with Julia 1.12's Pkg for projects that have URL `[sources]` for unregistered packages ("expected package `Test` to be registered"); it will work once the JLLs are registered in General.)
 
 ## Credits and how to cite
 
