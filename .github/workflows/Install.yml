@@ -106,6 +106,7 @@ jobs:
           f="$HOME/seissol_examples/tpv13/outputs/tpv13-energy.csv"
           test -s "$f" && tail -n 3 "$f"
           grep -q seismic_moment "$f"
+          julia ci/check_xdmf.jl "$HOME/seissol_examples/tpv13/outputs"
       - name: Keep the simulation output
         if: always()
         uses: actions/upload-artifact@v4
