@@ -57,32 +57,37 @@ end
 git_blob_sha1(data::AbstractVector{UInt8}) = bytes2hex(sha1(vcat(codeunits("blob $(length(data))\0"), data)))
 
 """
-    download_example(name; dir=mktempdir(), docs=false) -> parfile
+    download_example(name; dir=<name of the example>, docs=false) -> parfile
 
-Download the example `name` (see [`examples`](@ref) and [`example_info`](@ref)) into `dir` and
-return the path of its main parameter file. Every file is verified against the checksum pinned
-in the package. Figures, notebooks and PDFs are skipped unless `docs=true`.
+Download the example `name` (see [`examples`](@ref) and [`example_info`](@ref)) and return the
+path of its main parameter file. The files go into the folder `dir`, by default a folder with the
+name of the example (`"tpv13"`, `"tpv5"` for `"examples/tpv5"`, ...) in the current directory.
+Every file is verified against the checksum pinned in the package; files that are already
+there with the right checksum are not downloaded again. Figures, notebooks and PDFs are skipped
+unless `docs=true`.
 
 Only the examples with status `"runs"` are known to work with the bundled generic SeisSol
 binary; for the others a warning explains what is missing.
 
 ```julia
-par = download_example("tpv13")
+par = download_example("tpv13")        # creates ./tpv13
 set_parameters!(par; EndTime = 1.0)
 run_seissol(par; nprocs = 2)
 ```
 """
-function download_example(name::AbstractString; dir::AbstractString = mktempdir(), docs::Bool = false)
+function download_example(name::AbstractString; dir::AbstractString = last(split(name, '/')), docs::Bool = false)
     haskey(EXAMPLES, name) || throw(ArgumentError("unknown example \"$name\"; available: $(examples())"))
     ex = EXAMPLES[name]
     ex["status"] == "runs" || @warn "Example \"$name\": $(STATUS[ex["status"]]) - $(ex["description"])"
     files = filter(f -> docs || !is_doc(f["path"]), ex["files"])
+    dir = abspath(dir)
     @info "Downloading example \"$name\" ($(round(sum(f["size"] for f in files) / 1e6; digits = 1)) MB, $(length(files)) files) to $dir"
     mkpath(dir)
     base = "https://raw.githubusercontent.com/$(ex["repo"])/$(ex["commit"])"
     for f in files
         local_path = joinpath(dir, split(f["path"], '/'; limit = 2)[2])
         mkpath(dirname(local_path))
+        isfile(local_path) && filesize(local_path) == f["size"] && git_blob_sha1(read(local_path)) == f["sha1"] && continue
         Downloads.download("$base/$(f["path"])", local_path)
         data = read(local_path)
         (length(data) == f["size"] && git_blob_sha1(data) == f["sha1"]) ||

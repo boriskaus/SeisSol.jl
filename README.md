@@ -63,7 +63,7 @@ using SeisSol
 
 run_proxy()                        # kernel benchmark without input files: checks the installation
 
-par = download_example("tpv13")    # SCEC TPV13 rupture benchmark from the SeisSol training material
+par = download_example("tpv13")    # SCEC TPV13 benchmark from the SeisSol training material -> creates ./tpv13
 set_parameters!(par; EndTime = 2.0)
 mkpath(joinpath(dirname(par), "outputs"))
 run_seissol(par; nprocs = 4)             # 4 MPI ranks, 1 OpenMP thread each (default)
@@ -126,7 +126,7 @@ best used through `export_prefix`.) Optionally add the folder to your path:
 `*.par`). With Julia (this also fixes the parameter file, see below):
 
 ```sh
-julia -e 'using SeisSol; download_example("tpv13"; dir="tpv13")'
+julia -e 'using SeisSol; download_example("tpv13")'     # creates the folder ./tpv13
 cd tpv13
 ```
 

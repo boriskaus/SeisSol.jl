@@ -121,12 +121,24 @@ end
     @test isfile(par) && basename(par) == "parameters.par"
     @test get_parameter(par, "MeshFile") == "tpv5_f200m.puml.h5"
     @test !isdir(joinpath(dir, "figures"))
+
+    # default location: a folder named after the example in the current directory; repeated
+    # calls do not download again
+    mktempdir() do tmp
+        cd(tmp) do
+            par = download_example("examples/tpv5")
+            @test par == joinpath(realpath(tmp), "tpv5", "parameters.par")
+            t = mtime(par)
+            @test download_example("examples/tpv5") == par
+            @test mtime(par) == t
+        end
+    end
 end
 
 @testset "ASAGI example (Sulawesi: 3D velocity model read from NetCDF)" begin
     @test SeisSol.EXAMPLES["sulawesi"]["status"] == "runs"
     if RUN_SOLVER
-        par = download_example("sulawesi")
+        par = download_example("sulawesi"; dir = mktempdir())
         dir = dirname(par)
         set_parameters!(par; EndTime = 0.05)
         mkpath(joinpath(dir, "output"))
@@ -142,7 +154,7 @@ end
     @test_throws ArgumentError download_example("nonexistent")
 
     function run_tpv13(nprocs)
-        par = download_example("tpv13")
+        par = download_example("tpv13"; dir = mktempdir())
         dir = dirname(par)
         set_parameters!(par; EndTime = 1.0)
         mkpath(joinpath(dir, "outputs"))
