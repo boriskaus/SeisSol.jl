@@ -16,7 +16,7 @@ root = mktempdir()
 tarball = joinpath(root, "seissol.tar.gz")
 Downloads.download(get(ENV, "WIN_TARBALL", "https://github.com/boriskaus/SeisSol_jll.jl/releases/download/windows-debug/seissol-win-debug.tar.gz"), tarball)
 inst = joinpath(root, "inst"); mkpath(inst)
-run(`tar -xzf $tarball -C $inst`)
+run(`tar --force-local -xzf $tarball -C $inst`)
 exe = joinpath(inst, "bin", "seissol.exe"); proxy = joinpath(inst, "bin", "seissol_proxy.exe")
 @show isfile(exe) isfile(proxy)
 
