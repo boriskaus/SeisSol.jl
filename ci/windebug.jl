@@ -1,10 +1,11 @@
 # Debug run of the experimental Windows build of SeisSol under gdb (temporary, branch windows-debug).
 using Pkg, Downloads
 Pkg.activate(mktempdir())
-Pkg.add(["HDF5_jll", "PARMETIS_jll", "yaml_cpp_jll", "Lua_jll", "MicrosoftMPI_jll", "CompilerSupportLibraries_jll"])
+Pkg.add(["CodecZlib", "HDF5_jll", "PARMETIS_jll", "yaml_cpp_jll", "Lua_jll", "MicrosoftMPI_jll", "CompilerSupportLibraries_jll"])
 Pkg.add([PackageSpec(url = "https://github.com/boriskaus/ASAGI_jll.jl"),
          PackageSpec(url = "https://github.com/boriskaus/easi_jll.jl"),
          PackageSpec(url = "https://github.com/boriskaus/SeisSol.jl", rev = "main")])
+using CodecZlib, Tar
 using HDF5_jll, PARMETIS_jll, yaml_cpp_jll, Lua_jll, MicrosoftMPI_jll, CompilerSupportLibraries_jll, easi_jll
 using SeisSol
 
@@ -16,7 +17,9 @@ root = mktempdir()
 tarball = joinpath(root, "seissol.tar.gz")
 Downloads.download(get(ENV, "WIN_TARBALL", "https://github.com/boriskaus/SeisSol_jll.jl/releases/download/windows-debug/seissol-win-debug.tar.gz"), tarball)
 inst = joinpath(root, "inst"); mkpath(inst)
-run(`tar --force-local -xzf $tarball -C $inst`)
+open(tarball) do io
+    Tar.extract(GzipDecompressorStream(io), inst)
+end
 exe = joinpath(inst, "bin", "seissol.exe"); proxy = joinpath(inst, "bin", "seissol_proxy.exe")
 @show isfile(exe) isfile(proxy)
 
