@@ -1,4 +1,20 @@
+"""
+    solver_usable() -> Bool
+
+`true` if a SeisSol binary exists for this platform and can be used. The Windows binary currently
+crashes at runtime and is therefore blocked unless the environment variable
+`SEISSOL_ALLOW_WINDOWS=true` is set.
+"""
+solver_usable() = SeisSol_jll.is_available() &&
+                  (!Sys.iswindows() || get(ENV, "SEISSOL_ALLOW_WINDOWS", "false") == "true")
+
 function check_available()
+    if Sys.iswindows() && !solver_usable()
+        error("""The Windows build of SeisSol currently crashes at runtime and is disabled.
+              Please run SeisSol.jl inside WSL2 (Windows Subsystem for Linux, e.g. Ubuntu), where the
+              Linux binary is used: https://learn.microsoft.com/windows/wsl/install
+              (set SEISSOL_ALLOW_WINDOWS=true to try the Windows binary anyway).""")
+    end
     if !SeisSol_jll.is_available()
         error("""SeisSol_jll is not available for this platform/MPI combination.
               The binary is built for Linux and macOS with MPICH (there is no Windows version).

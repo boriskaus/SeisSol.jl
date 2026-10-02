@@ -23,7 +23,7 @@ large supercomputers (MPI + OpenMP, GPUs).
 
 ## Limitations — please read
 
-- **Windows:** there is currently no SeisSol binary for Windows (the build crashes at runtime). The wrapper itself (parameter files, example download, output reading) works, but the solver tests are skipped; please use WSL2 (Linux).
+- **Windows:** the Windows build of SeisSol currently **crashes at runtime**, so `SeisSol.jl` refuses to run it and tells you to use **WSL2** instead. In WSL2 (Windows Subsystem for Linux, `wsl --install`, then e.g. Ubuntu) install Julia and SeisSol.jl exactly as described below; the Linux binary is used and everything works, including `export_prefix` and the terminal usage. The rest of the wrapper (parameter files, example download, output reading) also works natively on Windows. `SEISSOL_ALLOW_WINDOWS=true` lifts the block.
 
 The binary behind this package is a **generic, portable build**, chosen so that it runs everywhere:
 

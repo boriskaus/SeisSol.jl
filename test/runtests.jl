@@ -2,10 +2,9 @@ using Test
 using SeisSol
 using SeisSol_jll
 
-# The tests that start the solver are skipped wherever SeisSol_jll is not available. The Windows
-# binary is experimental (see the README) and only tested if SEISSOL_TEST_WINDOWS=true is set.
-const RUN_SOLVER = SeisSol_jll.is_available() &&
-                   (!Sys.iswindows() || get(ENV, "SEISSOL_TEST_WINDOWS", "false") == "true")
+# The tests that start the solver are skipped wherever there is no usable SeisSol binary; the
+# Windows binary is blocked (see the README) unless SEISSOL_ALLOW_WINDOWS=true is set.
+const RUN_SOLVER = SeisSol.solver_usable()
 
 # The first testset mirrors the checks in SeisSol's own CI workflow
 # (SeisSol/.github/workflows/build-seissol.yml): the solver must refuse to run without an
@@ -49,6 +48,16 @@ end
         @test occursin("PERFORMANCE SUMMARY", String(take!(out)))
     else
         @test_skip false
+    end
+end
+
+@testset "binary availability" begin
+    @test SeisSol.solver_usable() isa Bool
+    if Sys.iswindows() && !SeisSol.solver_usable()
+        # clear message instead of a crash
+        @test_throws ErrorException run_proxy()
+        err = try run_proxy() catch e; sprint(showerror, e) end
+        @test occursin("WSL2", err)
     end
 end
 
@@ -127,7 +136,7 @@ end
     mktempdir() do tmp
         cd(tmp) do
             par = download_example("examples/tpv5")
-            @test par == joinpath(realpath(tmp), "tpv5", "parameters.par")
+            @test samefile(par, joinpath(tmp, "tpv5", "parameters.par"))
             t = mtime(par)
             @test download_example("examples/tpv5") == par
             @test mtime(par) == t
