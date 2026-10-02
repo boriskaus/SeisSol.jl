@@ -17,4 +17,6 @@ jobs:
           install: mingw-w64-x86_64-gdb
       - name: Debug run
         shell: msys2 {0}
+        env:
+          WIN_TARBALL: https://github.com/boriskaus/SeisSol_jll.jl/releases/download/windows-debug/seissol-win-guard.tar.gz
         run: julia --color=no ci/windebug.jl

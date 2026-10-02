@@ -40,7 +40,9 @@ function plain(label, cmd; dir = pwd())
     println("---- exit: 0x", string(UInt32(p.exitcode % UInt32), base = 16))
 end
 
-dbg("proxy under gdb", `$proxy 100 1 ader`)
+for k in ("ader", "localwoader", "local", "neigh", "neigh_dr", "godunov_dr")
+    dbg("proxy $k under gdb", `$proxy 100 1 $k`)
+end
 plain("proxy plain", `$proxy 100 1 all`)
 
 par = download_example("tpv13"; dir = joinpath(root, "tpv13"))
